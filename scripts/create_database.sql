@@ -1,6 +1,6 @@
-DROP DATABASE IF EXISTS event_management;
-CREATE DATABASE event_management CHARACTER SET utf8 COLLATE utf8_unicode_ci;
-USE event_management;
+DROP DATABASE IF EXISTS cbcn_web;
+CREATE DATABASE cbcn_web CHARACTER SET utf8 COLLATE utf8_unicode_ci;
+USE cbcn_web;
 
 CREATE TABLE place(
     id INT AUTO_INCREMENT NOT NULL,
