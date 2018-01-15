@@ -38,12 +38,12 @@ class Config{
      */
     public function load($parse_sections = true){
         //If no filename, throw exception
-        if(empty($this->file) || !is_file($this->file)) throw new Exception("Error: Config file does not exists: {$this->file}");
+        if(empty($this->file) || !is_file($this->file)) throw new \Exception("Error: Config file does not exists: {$this->file}");
         $data = parse_ini_file($this->file, $parse_sections);
         //Throw exception if error on reading file
         if($data === false){
             $error = error_get_last();
-            throw new Exception("Error: Unable to load config file - ".$error["message"]);
+            throw new \Exception("Error: Unable to load config file - ".$error["message"]);
         }
         //Save config
         $this->conf = $data;
@@ -58,7 +58,7 @@ class Config{
      */
     public function getValue($param, $section = null){
         //Throw exception if no section specified when it has loaded sections.
-        if($this->has_sections && $section === null) throw new Exception("Error: No config section determined");
+        if($this->has_sections && $section === null) throw new \Exception("Error: No config section determined");
         //Return value, null if does not exists.
         if($this->has_sections){
             return isset($this->conf[$section][$param]) ? $this->conf[$section][$param] : null;
