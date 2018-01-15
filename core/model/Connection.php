@@ -9,7 +9,7 @@ class Connection{
     private static $conn;
 
     public static function getDefaultConnection(){
-        $conf = Config::getConfig(CBCN_CORE_ROOT."/config.ini");
+        $conf = Config::getDefaultConfig();
         $user = $conf->getValue("user", "Database");
         $pass = $conf->getValue("pass", "Database");
         $host = $conf->getValue("host", "Database");

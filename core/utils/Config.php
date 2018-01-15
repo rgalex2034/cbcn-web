@@ -14,6 +14,10 @@ class Config{
         $this->file = $filename;
     }
 
+    public static function getDefaultConfig(){
+        return self::getConfig(CBCN_CORE_ROOT."/config.ini");
+    }
+
     /**
      * Return a config for a file.
      * If was previously loaded, return the same instance.
