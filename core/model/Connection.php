@@ -6,9 +6,12 @@ use \PauSabe\CBCN\utils\Config;
 
 class Connection{
 
-    private static $conn;
+    private static $conn = null;
 
     public static function getDefaultConnection(){
+
+        if(!is_null($conn)) return $conn;
+
         $conf = Config::getDefaultConfig();
         $user = $conf->getValue("user", "Database");
         $pass = $conf->getValue("pass", "Database");
@@ -17,6 +20,7 @@ class Connection{
         $database = $conf->getValue("database", "Database");
 
         $conn = new \PDO("mysql:dbname=$database;host=$host", $user, $pass);
+        self::$conn = $conn;
         return $conn;
     }
 

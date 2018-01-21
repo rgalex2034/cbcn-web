@@ -28,7 +28,7 @@ CREATE TABLE event(
     `date` DATETIME,
     place INT,
     url VARCHAR(100),
-    mail_contact VARCHAR(50),
+    contact_email VARCHAR(50),
     `group` INT,
     PRIMARY KEY(id),
     FOREIGN KEY(`group`) REFERENCES `group`(id),
