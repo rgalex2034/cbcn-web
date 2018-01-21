@@ -44,4 +44,9 @@ class Admin{
         $this->password = crypt($password, '$2y$07$'.$salt);
     }
 
+    public function checkPassword($password){
+        //TODO: Change string comparison to a safe version for timing attacks.
+        return $this->password === crypt($password, $this->password);
+    }
+
 }
