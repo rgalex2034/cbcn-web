@@ -20,6 +20,10 @@ class Admin{
         return $this->id;
     }
 
+    public function setId($id){
+        $this->id = is_null($id) ? null : intval($id);
+    }
+
     public function getName(){
         return $this->name;
     }

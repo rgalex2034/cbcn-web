@@ -24,6 +24,7 @@ spl_autoload_register(function($class) use($root_app){
 
     //Include file
     $file = str_replace("\\", DIRECTORY_SEPARATOR, $class).".php";
+
     if(is_file($file)){
         include $file;
         return true;

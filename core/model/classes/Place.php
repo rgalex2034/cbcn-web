@@ -20,6 +20,10 @@ class Place{
         return $this->id;
     }
 
+    public function setId($id){
+        $this->id = is_null($id) ? null : intval($id);
+    }
+
     public function getAddress(){
         return $this->address;
     }

@@ -10,7 +10,7 @@ class Connection{
 
     public static function getDefaultConnection(){
 
-        if(!is_null($conn)) return $conn;
+        if(!is_null(self::$conn)) return self::$conn;
 
         $conf = Config::getDefaultConfig();
         $user = $conf->getValue("user", "Database");
@@ -20,6 +20,8 @@ class Connection{
         $database = $conf->getValue("database", "Database");
 
         $conn = new \PDO("mysql:dbname=$database;host=$host", $user, $pass);
+        $conn->setAttribute(\PDO::ATTR_EMULATE_PREPARES, false);
+        $conn->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
         self::$conn = $conn;
         return $conn;
     }
