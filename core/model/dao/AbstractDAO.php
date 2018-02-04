@@ -39,27 +39,27 @@ abstract class AbstractDAO{
 
     public function create($object){
         $conn = self::getConnection();
-        $this->onCreate($object, $conn);
+        return $this->onCreate($object, $conn);
     }
 
     public function read($id){
         $conn = self::getConnection();
-        $this->onRead($id, $conn);
+        return $this->onRead($id, $conn);
     }
 
     public function readAll(){
         $conn = self::getConnection();
-        $this->onReadAll($conn);
+        return $this->onReadAll($conn);
     }
 
     public function update($object){
         $conn = self::getConnection();
-        $this->onUpdate($object, $conn);
+        return $this->onUpdate($object, $conn);
     }
 
     public function delete($object){
         $conn = self::getConnection();
-        $this->onDelete($object, $conn);
+        return $this->onDelete($object, $conn);
     }
 
     protected abstract function onCreate($object, $context);

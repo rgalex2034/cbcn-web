@@ -10,10 +10,10 @@ class Event{
     private $id;
     private $name;
     private $date;
-    private $place;
+    protected $place;
     private $url;
     private $contact_email;
-    private $group;
+    protected $group;
 
     public function __construct($name, $date = null, Place $place = null,
                                 $url = null, $contact_email = null,

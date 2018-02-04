@@ -3,6 +3,7 @@
 namespace PauSabe\CBCN\model\dao;
 
 use PauSabe\CBCN\model\dao\AbstractDAO;
+use PauSabe\CBCN\model\dao\proxies;
 
 class EventDAO extends AbstractDAO{
 
@@ -20,11 +21,23 @@ class EventDAO extends AbstractDAO{
         $group = $event->getGroup();
         $stmnt->bindValue(":group", is_null($group) || empty($group->getId()) ? null : $group->getId());
 
-        $stmnt->execute();
+        return $stmnt->execute();
     }
 
     protected function onRead($id, $conn){
+        $sql = "SELECT id, name, `date`, place, url, contact_email, `group`
+                FROM event
+                WHERE id = :id";
         
+        $stmnt = $conn->prepare($sql);
+        $stmnt->bindValue(":id", $id);
+        $stmnt->execute();
+
+        $event = null;
+        if($row = $stmnt->fetch(\PDO::FETCH_ASSOC)){
+            $event = $this->createEventFromData($row);
+        }
+        return $event;
     }
 
     protected function onReadAll($conn){
@@ -37,6 +50,13 @@ class EventDAO extends AbstractDAO{
 
     protected function onDelete($object, $conn){
         
+    }
+
+    private function createEventFromData($data){
+        $event = new proxies\EventProxy($data["name"], $data["date"], null, $data["url"], $data["contact_email"], null);
+        $event->setGroupId($data["group"]);
+        $event->setPlaceid($data["place"]);
+        return $event;
     }
 
 }
