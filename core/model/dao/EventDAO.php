@@ -15,13 +15,15 @@ class EventDAO extends AbstractDAO{
         $stmnt->bindValue(":name", $event->getName());
         $stmnt->bindValue(":date", $event->getDate());
         $place = $event->getPlace();
-        $stmnt->bindValue(":place", is_null($place) || empty($place->getId()) ? null : $place->getId());
+        $stmnt->bindValue(":place", is_null($place) || !$place->getId() ? null : $place->getId());
         $stmnt->bindValue(":url", $event->getUrl());
         $stmnt->bindValue(":contact_email", $event->getContactEmail());
         $group = $event->getGroup();
-        $stmnt->bindValue(":group", is_null($group) || empty($group->getId()) ? null : $group->getId());
+        $stmnt->bindValue(":group", is_null($group) || !$group->getId() ? null : $group->getId());
 
-        return $stmnt->execute();
+        $result = $stmnt->execute();
+        if($result) $event->setId($conn->lastInsertId());
+        return $result;
     }
 
     protected function onRead($id, $conn){
@@ -41,7 +43,17 @@ class EventDAO extends AbstractDAO{
     }
 
     protected function onReadAll($conn){
-        
+        $sql = "SELECT id, name, `date`, place, url, contact_email, `group`
+                FROM event";
+
+        $stmnt = $conn->prepare($sql);
+        $stmnt->execute();
+
+        $events = array();
+        while($row = $stmnt->fetch(\PDO::FETCH_ASSOC)){
+            $events[] = $this->createEventFromData($row);
+        }
+        return $events;
     }
 
     protected function onUpdate($object, $conn){
@@ -54,6 +66,7 @@ class EventDAO extends AbstractDAO{
 
     private function createEventFromData($data){
         $event = new proxies\EventProxy($data["name"], $data["date"], null, $data["url"], $data["contact_email"], null);
+        $event->setId($data["id"]);
         $event->setGroupId($data["group"]);
         $event->setPlaceid($data["place"]);
         return $event;

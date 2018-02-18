@@ -14,7 +14,9 @@ class PlaceDAO extends AbstractDAO{
         $stmnt->bindValue(":address", $object->getAddress());
         $stmnt->bindValue(":latitude", $object->getLatitude());
         $stmnt->bindValue(":longitude", $object->getLongitude());
-        return $stmnt->execute();
+        $result = $stmnt->execute();
+        if($result) $object->setId($conn->lastInsertId());
+        return $result;
     }
 
     protected function onRead($id, $conn){
@@ -33,20 +35,31 @@ class PlaceDAO extends AbstractDAO{
         return $place;
     }
 
-    protected function onReadAll($context){
+    protected function onReadAll($conn){
+        $sql = "SELECT id, address, latitude, longitude
+                FROM place";
+
+        $stmnt = $conn->prepare($sql);
+        $stmnt->execute();
+
+        $places = array();
+        while($row = $stmnt->fetch(\PDO::FETCH_ASSOC)){
+            $places[] = $this->createPlaceFromData($row);
+        }
+        return $places;
+    }
+
+    protected function onUpdate($object, $conn){
         
     }
 
-    protected function onUpdate($object, $context){
-        
-    }
-
-    protected function onDelete($object, $context){
+    protected function onDelete($object, $conn){
         
     }
 
     private function createPlaceFromData($data){
         $place = new Place($data["address"], $data["latitude"], $data["longitude"]);
+        $place->setId($data["id"]);
         return $place;
     }
 
