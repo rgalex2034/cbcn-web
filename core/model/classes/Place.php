@@ -2,7 +2,9 @@
 
 namespace PauSabe\CBCN\model\classes;
 
-class Place{
+use PauSabe\CBCN\utils\JSON;
+
+class Place implements JSON\JsonSerializable{
     
     private $id;
     private $address;
@@ -52,4 +54,12 @@ class Place{
         $this->longitude = floatval($longitude);
     }
 
+    public function jsonSerialize(){
+        return array(
+            "id" => $this->getId(),
+            "address" => $this->getAddress(),
+            "latitude" => $this->getLatitude(),
+            "longitude" => $this->getLongitude()
+        );
+    }
 }
