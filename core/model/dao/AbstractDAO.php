@@ -33,7 +33,7 @@ abstract class AbstractDAO{
     public function rollback(){
         $conn = self::getConnection();
         if($conn->inTransaction())
-            $conn->rollBack();
+            return $conn->rollBack();
         return false;
     }
 
