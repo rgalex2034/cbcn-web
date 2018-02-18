@@ -56,7 +56,23 @@ class GroupDAO extends AbstractDAO{
     }
 
     protected function onUpdate($object, $conn){
+        $sql = "UPDATE `group`
+                SET name = :name, place = :place, description = :description,
+                    url_image = :url_image, contact_email = :contact_email,
+                    district = :district
+                WHERE id = :id";
 
+        $stmnt = $conn->prepare($sql);
+        $stmnt->bindValue(":name", $object->getName());
+        $place = $object->getPlace();
+        $stmnt->bindValue(":place", is_null($place) || !$place->getId() ? null : $place->getId());
+        $stmnt->bindValue(":description", $object->getDescription());
+        $stmnt->bindValue(":url_image", $object->getUrlImage());
+        $stmnt->bindValue(":contact_email", $object->getContactEmail());
+        $stmnt->bindValue(":district", $object->getDistrict());
+        $stmnt->bindValue(":id", $object->getId());
+
+        return $stmnt->execute();
     }
 
     protected function onDelete($object, $conn){

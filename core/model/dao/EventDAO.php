@@ -57,7 +57,23 @@ class EventDAO extends AbstractDAO{
     }
 
     protected function onUpdate($object, $conn){
-        
+        $sql = "UPDATE event
+                SET name = :name, `date` = :date, place = :place, url = :url,
+                    contact_email = :contact_email, `group` = :group
+                WHERE id = :id";
+
+        $stmnt = $conn->prepare($sql);
+        $stmnt->bindValue(":name", $object->getName());
+        $stmnt->bindValue(":date", $object->getDate());
+        $place = $object->getPlace();
+        $stmnt->bindValue(":place", is_null($place) || !$place->getId() ? null : $place->getId());
+        $stmnt->bindValue(":url", $object->getUrl());
+        $stmnt->bindValue(":contact_email", $object->getContactEmail());
+        $group = $object->getGroup();
+        $stmnt->bindValue(":group", is_null($group) || !$group->getId() ? null : $group->getId());
+        $stmnt->bindValue(":id", $object->getId());
+
+        return $stmnt->execute();
     }
 
     protected function onDelete($object, $conn){

@@ -50,7 +50,17 @@ class PlaceDAO extends AbstractDAO{
     }
 
     protected function onUpdate($object, $conn){
-        
+        $sql = "UPDATE place
+                SET address = :address, latitude = :latitude, longitude = :longitude
+                WHERE id = :id";
+
+        $stmnt = $conn->prepare($sql);
+        $stmnt->bindValue(":address", $object->getAddress());
+        $stmnt->bindValue(":latitude", $object->getLatitude());
+        $stmnt->bindValue(":longitude", $object->getLongitude());
+        $stmnt->bindValue(":id", $object->getId());
+
+        return $stmnt->execute();
     }
 
     protected function onDelete($object, $conn){
