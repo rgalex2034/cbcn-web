@@ -1,0 +1,7 @@
+"Template ini file
+[Database]
+user=root
+pass=root
+host=localhost
+port=3306
+database=cbcn_web
