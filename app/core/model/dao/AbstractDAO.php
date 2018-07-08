@@ -16,21 +16,21 @@ abstract class AbstractDAO{
         return self::$conn;
     }
 
-    public function beginTransaction(){
+    public static function beginTransaction(){
         $conn = self::getConnection();
         if(!$conn->inTransaction())
             return $conn->beginTransaction();
         return false;
     }
 
-    public function commit(){
+    public static function commit(){
         $conn = self::getConnection();
         if($conn->inTransaction())
             return $conn->commit();
         return false;
     }
 
-    public function rollback(){
+    public static function rollback(){
         $conn = self::getConnection();
         if($conn->inTransaction())
             return $conn->rollBack();
