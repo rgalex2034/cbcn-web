@@ -20,7 +20,7 @@ class EventService{
         }
 
         if(!is_null($group_id)){
-            $gr_dao = new d\PlaceDAO();
+            $gr_dao = new d\GroupDAO();
             $group = $gr_dao->read($group_id);
             $event->setGroup($group);
         }

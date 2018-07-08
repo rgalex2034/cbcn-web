@@ -64,7 +64,13 @@ class PlaceDAO extends AbstractDAO{
     }
 
     protected function onDelete($object, $conn){
-        
+        $sql = "DELETE FROM place
+                WHERE id = :id";
+
+        $stmnt = $conn->prepare($sql);
+        $stmnt->bindValue(":id", $object->getid());
+
+        return $stmnt->execute();
     }
 
     private function createPlaceFromData($data){

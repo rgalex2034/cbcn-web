@@ -30,7 +30,7 @@ class EventDAO extends AbstractDAO{
         $sql = "SELECT id, name, `date`, place, url, contact_email, `group`
                 FROM event
                 WHERE id = :id";
-        
+
         $stmnt = $conn->prepare($sql);
         $stmnt->bindValue(":id", $id);
         $stmnt->execute();
@@ -77,7 +77,13 @@ class EventDAO extends AbstractDAO{
     }
 
     protected function onDelete($object, $conn){
-        
+        $sql = "DELETE FROM event
+                WHERE id = :id";
+
+        $stmnt = $conn->prepare($sql);
+        $stmnt->bindValue(":id", $object->getid());
+
+        return $stmnt->execute();
     }
 
     private function createEventFromData($data){

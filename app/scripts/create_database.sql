@@ -19,7 +19,7 @@ CREATE TABLE `group`(
     contact_email VARCHAR(50),
     district VARCHAR(50),
     PRIMARY KEY(id),
-    FOREIGN KEY(place) REFERENCES place(id)
+    FOREIGN KEY(place) REFERENCES place(id) ON DELETE SET NULL
 );
 
 CREATE TABLE event(
@@ -31,8 +31,8 @@ CREATE TABLE event(
     contact_email VARCHAR(50),
     `group` INT,
     PRIMARY KEY(id),
-    FOREIGN KEY(`group`) REFERENCES `group`(id),
-    FOREIGN KEY(place) REFERENCES place(id)
+    FOREIGN KEY(`group`) REFERENCES `group`(id) ON DELETE SET NULL,
+    FOREIGN KEY(place) REFERENCES place(id) ON DELETE SET NULL
 );
 
 CREATE TABLE `user`(
