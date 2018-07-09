@@ -8,7 +8,7 @@ class Group{
 
     private $id;
     private $name;
-    private $place;
+    protected $place;
     private $description;
     private $url_image;
     private $contact_email;
