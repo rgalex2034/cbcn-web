@@ -8,33 +8,17 @@ abstract class AbstractDAO{
 
     private static $conn;
 
-    /**
-    * @return PDO - Default PDO connection.
-    */
+    protected abstract static function createConnection();
+
+    public abstract static function beginTransaction();
+
+    public abstract static function commit();
+
+    public abstract static function rollback();
+
     private static function getConnection(){
-        if(empty(self::$conn)) self::$conn = Connection::getDefaultConnection();
+        if(!self::$conn) self::$conn = static::createConnection();
         return self::$conn;
-    }
-
-    public static function beginTransaction(){
-        $conn = self::getConnection();
-        if(!$conn->inTransaction())
-            return $conn->beginTransaction();
-        return false;
-    }
-
-    public static function commit(){
-        $conn = self::getConnection();
-        if($conn->inTransaction())
-            return $conn->commit();
-        return false;
-    }
-
-    public static function rollback(){
-        $conn = self::getConnection();
-        if($conn->inTransaction())
-            return $conn->rollBack();
-        return false;
     }
 
     public function create($object){
@@ -47,9 +31,9 @@ abstract class AbstractDAO{
         return $this->onRead($id, $conn);
     }
 
-    public function readAll(){
+    public function readAll($page = null, $qnt = null){
         $conn = self::getConnection();
-        return $this->onReadAll($conn);
+        return $this->onReadAll($conn, $page, $qnt);
     }
 
     public function update($object){
@@ -64,7 +48,7 @@ abstract class AbstractDAO{
 
     protected abstract function onCreate($object, $context);
     protected abstract function onRead($id, $context);
-    protected abstract function onReadAll($context);
+    protected abstract function onReadAll($context, $page, $qnt);
     protected abstract function onUpdate($object, $context);
     protected abstract function onDelete($object, $context);
 }

@@ -4,7 +4,7 @@ namespace PauSabe\CBCN\model\dao;
 
 use PauSabe\CBCN\model\classes\Place;
 
-class PlaceDAO extends AbstractDAO{
+class PlaceDAO extends MysqlDAO{
 
     protected function onCreate($object, $conn){
         $sql = "INSERT INTO place (address, latitude, longitude)
@@ -35,9 +35,12 @@ class PlaceDAO extends AbstractDAO{
         return $place;
     }
 
-    protected function onReadAll($conn){
+    protected function onReadAll($conn, $page, $qnt){
         $sql = "SELECT id, address, latitude, longitude
                 FROM place";
+
+        $limit = MysqlDAO::getLimit($page, $qnt);
+        if($limit) $sql .= " $limit";
 
         $stmnt = $conn->prepare($sql);
         $stmnt->execute();

@@ -22,4 +22,10 @@ class PlaceService{
         return $place;
     }
 
+    public static function getAll($page = null, $qnt = null){
+        $pl_dao = new d\PlaceDAO();
+        $places = $pl_dao->readAll($page, $qnt);
+        return $places;
+    }
+
 }

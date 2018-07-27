@@ -5,7 +5,7 @@ namespace PauSabe\CBCN\model\dao;
 use PauSabe\CBCN\model\classes\Group;
 use PauSabe\CBCN\model\dao\proxies\GroupProxy;
 
-class GroupDAO extends AbstractDAO{
+class GroupDAO extends MysqlDAO{
 
     protected function onCreate($group, $conn){
         $sql = "INSERT INTO `group` (name, place, description, url_image, contact_email, district)
@@ -41,9 +41,12 @@ class GroupDAO extends AbstractDAO{
         return $group;
     }
 
-    protected function onReadAll($conn){
+    protected function onReadAll($conn, $page, $qnt){
         $sql = "SELECT id, name, place, description, url_image, contact_email, district
                 FROM `group`";
+
+        $limit = MysqlDAO::getLimit($page, $qnt);
+        if($limit) $sql .= " $limit";
 
         $stmnt = $conn->prepare($sql);
         $stmnt->execute();

@@ -2,10 +2,9 @@
 
 namespace PauSabe\CBCN\model\dao;
 
-use PauSabe\CBCN\model\dao\AbstractDAO;
 use PauSabe\CBCN\model\dao\proxies;
 
-class EventDAO extends AbstractDAO{
+class EventDAO extends MysqlDAO{
 
     protected function onCreate($event, $conn){
         $sql = "INSERT INTO event(name, `date`, place, url, contact_email, `group`)
@@ -42,9 +41,12 @@ class EventDAO extends AbstractDAO{
         return $event;
     }
 
-    protected function onReadAll($conn){
+    protected function onReadAll($conn, $page, $qnt){
         $sql = "SELECT id, name, `date`, place, url, contact_email, `group`
                 FROM event";
+
+        $limit = MysqlDAO::getLimit($page, $qnt);
+        if($limit) $sql .= " $limit";
 
         $stmnt = $conn->prepare($sql);
         $stmnt->execute();

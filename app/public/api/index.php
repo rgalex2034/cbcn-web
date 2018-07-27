@@ -10,7 +10,10 @@ dispatch("/", function(){
 });
 
 dispatch("/place", function(){
-    return "Have some places!";
+    $page = isset($_GET["page"]) ? (int)$_GET["page"] : null;
+    $qnt  = isset($_GET["qnt"]) ? (int)$_GET["qnt"] : null;
+    $places = s\PlaceService::getAll($page, $qnt);
+    return u\JSON::encode($places);
 });
 
 dispatch("/place/:id", function(){
