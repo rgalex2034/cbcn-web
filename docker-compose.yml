@@ -3,7 +3,10 @@ services:
     web:
         build: .
         volumes:
-            - ./app:/var/www/app
+            - ./app/public:/var/www/html
+            - ./app/core:/var/www/cbcn-core
+            - ./app/lib:/var/www/cbcn-lib
+            - ./app/scripts:/etc/cbcn/scripts
         ports:
             - "81:80"
     mysql:

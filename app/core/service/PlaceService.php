@@ -16,4 +16,10 @@ class PlaceService{
         return $place->getId();
     }
 
+    public static function get($id){
+        $pl_dao = new d\PlaceDAO();
+        $place = $pl_dao->read($id);
+        return $place;
+    }
+
 }
