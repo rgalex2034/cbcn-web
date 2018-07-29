@@ -51,4 +51,14 @@ class EventService{
         return $ev_dao->update($event);
     }
 
+    public static function get($id){
+        $ev_dao = new d\EventDAO();
+        return $ev_dao->read($id);
+    }
+
+    public static function getAll($page = null, $qnt = null){
+        $ev_dao = new d\EventDAO();
+        return $ev_dao->readAll($page, $qnt);
+    }
+
 }

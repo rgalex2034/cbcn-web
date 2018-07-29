@@ -7,7 +7,7 @@ use PauSabe\CBCN\model\classes as c;
 
 class GroupService{
 
-    public static function create($name, $place_id = null, $description = null,
+    private static function newGroup($name, $place_id = null, $description = null,
                                 $url_image = null, $contact_email = null,
                                 $district = null){
         $group = new c\Group($name, null, $description, $url_image, $contact_email, $district);
@@ -18,10 +18,37 @@ class GroupService{
             $group->setPlace($place);
         }
 
+        return $group;
+    }
+
+    public static function create($name, $place_id = null, $description = null,
+                                $url_image = null, $contact_email = null,
+                                $district = null){
+        $group = self::newGroup($name, $place_id, $description, $url_image, $contact_email, $district);
+
         $gr_dao = new d\GroupDAO();
         $gr_dao->create($group);
 
         return $group->getId();
+    }
+
+    public static function update($id, $name, $place_id = null, $description = null,
+                                $url_image = null, $contact_email = null,
+                                $district = null){
+        $group = self::newGroup($name, $place_id, $description, $url_image, $contact_email, $district);
+
+        $gr_dao = new d\GroupDAO();
+        return $gr_dao->update($group);
+    }
+
+    public static function get($id){
+        $gr_dao = new d\GroupDAO();
+        return $gr_dao->read($id);
+    }
+
+    public static function getAll($page = null, $qnt = null){
+        $gr_dao = new d\GroupDAO();
+        return $gr_dao->readAll($page, $qnt);
     }
 
 }

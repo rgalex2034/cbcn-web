@@ -3,8 +3,9 @@
 namespace PauSabe\CBCN\model\classes;
 
 use \PauSabe\CBCN\model\classes\Place;
+use PauSabe\CBCN\utils\JSON;
 
-class Group{
+class Group implements JSON\JsonSerializable{
 
     private $id;
     private $name;
@@ -80,6 +81,18 @@ class Group{
 
     public function setDistrict($district){
         $this->district = strval($district);
+    }
+
+    public function jsonSerialize(){
+        return array(
+            "id" => $this->getId(),
+            "name" => $this->getName(),
+            "place" => $this->getPlace()->getId(),
+            "description" => $this->getDescription(),
+            "url_image" => $this->getUrlImage(),
+            "contact_email" => $this->getContactEmail(),
+            "district" => $this->getDistrict()
+        );
     }
 
 }

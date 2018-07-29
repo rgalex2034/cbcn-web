@@ -4,8 +4,9 @@ namespace PauSabe\CBCN\model\classes;
 
 use PauSabe\CBCN\model\classes\Group;
 use PauSabe\CBCN\model\classes\Place;
+use PauSabe\CBCN\utils\JSON;
 
-class Event{
+class Event implements JSON\JsonSerializable{
 
     private $id;
     private $name;
@@ -83,4 +84,17 @@ class Event{
     public function setGroup(Group $group){
         $this->group = $group;
     }
+
+    public function jsonSerialize(){
+        return array(
+            "id" => $this->getId(),
+            "name" => $this->getName(),
+            "date" => $this->getDate(),
+            "place" => $this->getPlace()->getId(),
+            "url" => $this->getUrl(),
+            "contact_email" => $this->getContactEmail(),
+            "group" => $this->getGroup()->getId()
+        );
+    }
+
 }

@@ -16,6 +16,14 @@ class PlaceService{
         return $place->getId();
     }
 
+    public static function update($id, $address, $latitude = null, $longitude = null){
+        $place = new c\Place($address, $latitude, $longitude);
+        $place->setId($id);
+
+        $pl_dao = new d\PlaceDAO();
+        return $pl_dao->update($place);
+    }
+
     public static function get($id){
         $pl_dao = new d\PlaceDAO();
         $place = $pl_dao->read($id);
