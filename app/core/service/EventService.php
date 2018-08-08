@@ -8,10 +8,11 @@ use PauSabe\CBCN\model\classes as c;
 class EventService{
 
     private static function newEvent($name, $date = null, $place_id = null,
-                                $url = null, $contact_email = null,
+                                $url = null, $image_full = null, $image_low = null,
+                                $contact_email = null,
                                 $group_id = null){
 
-        $event = new c\Event($name, $date, null, $url, $contact_email);
+        $event = new c\Event($name, $date, null, $url, $image_full, $image_low, $contact_email);
 
         if(!is_null($place_id)){
             $pl_dao = new d\PlaceDAO();
@@ -29,10 +30,10 @@ class EventService{
     }
 
     public static function create($name, $date = null, $place_id = null,
-                                $url = null, $contact_email = null,
-                                $group_id = null){
+                                $url = null, $image_full = null, $image_low = null,
+                                $contact_email = null, $group_id = null){
 
-        $event = self::newEvent($name, $date, $place_id, $url, $contact_email, $group_id);
+        $event = self::newEvent($name, $date, $place_id, $url, $image_full, $image_low, $contact_email, $group_id);
 
         $ev_dao = new d\EventDAO();
         $ev_dao->create($event);
@@ -41,10 +42,10 @@ class EventService{
     }
 
     public static function update($id, $name, $date = null, $place_id = null,
-                                $url = null, $contact_email = null,
-                                $group_id = null){
+                                $url = null, $image_full = null, $image_low = null,
+                                $contact_email = null, $group_id = null){
 
-        $event = self::newEvent($name, $date, $place_id, $url, $contact_email, $group_id);
+        $event = self::newEvent($name, $date, $place_id, $url, $image_full, $image_low, $contact_email, $group_id);
         $event->setId($id);
 
         $ev_dao = new d\EventDAO();

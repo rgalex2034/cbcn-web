@@ -13,17 +13,21 @@ class Event implements JSON\JsonSerializable{
     private $date;
     protected $place;
     private $url;
+    private $image_full;
+    private $image_low;
     private $contact_email;
     protected $group;
 
     public function __construct($name, $date = null, Place $place = null,
-                                $url = null, $contact_email = null,
-                                Group $group = null){
+                                $url = null, $image_full = null, $image_low = null,
+                                $contact_email = null, Group $group = null){
         $this->id = null;
         $this->name = $name;
         $this->setDate($date);
         $this->place = $place;
         $this->url = strval($url);
+        $this->image_full = strval($image_full);
+        $this->image_low = strval($image_low);
         $this->contact_email = strval($contact_email);
         $this->group = $group;
     }
@@ -69,6 +73,22 @@ class Event implements JSON\JsonSerializable{
         $this->url = strval($url);
     }
 
+    public function getImageFull(){
+        return $this->image_full;
+    }
+
+    public function setImageFull($image_full){
+        $this->image_full = strval($image_full);
+    }
+
+    public function getImageLow(){
+        return $this->image_low;
+    }
+
+    public function setImageLow($image_low){
+        $this->image_low = strval($image_low);
+    }
+
     public function getContactEmail(){
         return $this->contact_email;
     }
@@ -92,6 +112,8 @@ class Event implements JSON\JsonSerializable{
             "date" => $this->getDate(),
             "place" => $this->getPlace()->getId(),
             "url" => $this->getUrl(),
+            "image_full" => $this->getImageFull(),
+            "image_low" => $this->getImageLow(),
             "contact_email" => $this->getContactEmail(),
             "group" => $this->getGroup()->getId()
         );
