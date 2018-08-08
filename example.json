@@ -1,5 +1,4 @@
-EVENTS
-
+//EVENTS
 {
   "id":"1",
   "title":"Event 1",
@@ -33,6 +32,32 @@ EVENTS
       "long":"Carrer de la casa de l'alex, sta maria palau 08460 bcn"
     }
   },
-  "info_url":"https://url_to_show_more_info.com",
-  "organizer":"Alex el puto amo"
+  "url_info":"https://url_to_show_more_info.com",
+  "organizer":{
+    "name":"Alex el puto amo",
+    "email":"alex@puto.amo",
+    "mobile":"69696969"
+  }
+}
+
+//GROUPS
+{
+  "id":"1",
+  "name":"Group 1",
+  "description":"this gorup is goig to change your life",
+  "url_image":"https://pausabe.com/apps/CBCN/images/prova1LQ.jpg",
+  "location":{
+    "latitude":"-3.458591",
+    "longitude":"-3.458591",
+    "adress":{
+      "short":"Recinte ferial de casa l'alex",
+      "long":"Carrer de la casa de l'alex, sta maria palau 08460 bcn"
+    }
+  },
+  "url_info":"https://url_to_show_more_info.com",
+  "organizer":{
+    "name":"Alex el puto amo",
+    "email":"alex@puto.amo",
+    "mobile":"69696969"
+  }
 }
