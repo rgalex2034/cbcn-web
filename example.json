@@ -1,0 +1,38 @@
+EVENTS
+
+{
+  "id":"1",
+  "title":"Event 1",
+  "subtitle": "this is a super event",
+  "description":"this event is goig to change your life",
+  "date_start":{
+    "day":"15",
+    "month":"4",
+    "year":"1994",
+    "hour":"17",
+    "minute":"30"
+  },
+  "date_end":{
+    "day":"15",
+    "month":"4",
+    "year":"1994",
+    "hour":"18",
+    "minute":"30"
+  },
+  "image":
+  {
+    "url_real": "https://pausabe.com/apps/CBCN/images/prova1.jpg",
+    "url_thumbnail": "https://pausabe.com/apps/CBCN/images/prova1LQ.jpg"
+  },
+  "price":"10.5",
+  "location":{
+    "latitude":"-3.458591",
+    "longitude":"-3.458591",
+    "adress":{
+      "short":"Recinte ferial de casa l'alex",
+      "long":"Carrer de la casa de l'alex, sta maria palau 08460 bcn"
+    }
+  },
+  "info_url":"https://url_to_show_more_info.com",
+  "organizer":"Alex el puto amo"
+}
