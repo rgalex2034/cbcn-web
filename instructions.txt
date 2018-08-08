@@ -1,0 +1,10 @@
+-> Obrir app docker
+-> Engegar server i demés: docker-compose up
+-> ???: sudo docker exec -it cbcn-web_mysql_1 bash (pass: root)
+-> DROP & CREATE: mysql -u root -p < create_database.sql
+-> Crear files database: mysql -u root -p < sample_data.sql
+
+
+
+
+- http://localhost:81/api/event?page=1&qnt=10

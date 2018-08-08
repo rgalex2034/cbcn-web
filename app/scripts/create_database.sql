@@ -28,6 +28,8 @@ CREATE TABLE event(
     `date` DATETIME,
     place INT,
     url VARCHAR(100),
+    image_full VARCHAR(100),
+    image_low VARCHAR(100),
     contact_email VARCHAR(100),
     `group` INT,
     PRIMARY KEY(id),
