@@ -3,23 +3,44 @@
 namespace PauSabe\CBCN\utils;
 
 use PauSabe\CBCN\utils\JSON\JsonSerializable;
+use PauSabe\CBCN\utils\Filter;
 
 class JSON{
 
-    public static function encode($data){
+    private $filters = [];
+
+    public function encode($data){
+        //Extract data
         if($data instanceof JsonSerializable)
-            return self::encode($data->jsonSerialize());
-        if(is_array($data)) return self::encodeArray($data);
+            $data = $data->jsonSerialize();
+        //Pass filters
+        foreach($this->filters as $filter){
+            $data = $filter->filter($data);
+        }
+        //Serialize data
+        return $this->_encode($data);
+    }
+
+    public function addFilter(Filter $filter){
+        $this->filters[] = $filter;
+    }
+
+    private function _encode($data){
+        //Extract data
+        if($data instanceof JsonSerializable)
+            return $this->_encode($data->jsonSerialize());
+        //Serialize data
+        if(is_array($data)) return $this->encodeArray($data);
         return json_encode($data);
     }
 
-    private static function encodeArray($array){
+    private function encodeArray($array){
         $is_sequencial = empty($array) || array_keys($array) === range(0, count($array) -1);
         $head = $is_sequencial ? "[" : "{";
         $tail = $is_sequencial ? "]" : "}";
         $body = "";
         foreach($array as $key => $value){
-            $body .= $is_sequencial ? self::encode($value).", " : "\"$key\": ".self::encode($value).", ";
+            $body .= $is_sequencial ? $this->_encode($value).", " : "\"$key\": ".$this->_encode($value).", ";
         }
         $body = substr($body, 0, -2);
 
