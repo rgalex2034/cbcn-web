@@ -13,39 +13,46 @@ dispatch("/place", function(){
     $page = isset($_GET["page"]) ? (int)$_GET["page"] : null;
     $qnt  = isset($_GET["qnt"]) ? (int)$_GET["qnt"] : null;
     $places = s\PlaceService::getAll($page, $qnt);
-    return u\JSON::encode($places);
+    $serializer = new u\JSON();
+    return $serializer->encode($places);
 });
 
 dispatch("/place/:id", function(){
     $id = params("id");
     $place = s\PlaceService::get($id);
-    return u\JSON::encode($place);
+    $serializer = new u\JSON();
+    return $serializer->encode($place);
 });
 
 dispatch("/event", function(){
     $page = isset($_GET["page"]) ? (int)$_GET["page"] : null;
     $qnt  = isset($_GET["qnt"]) ? (int)$_GET["qnt"] : null;
     $events = s\EventService::getAll($page, $qnt);
-    return u\JSON::encode($events);
+    $serializer = new u\JSON();
+    return $serializer->encode($events);
 });
 
 dispatch("/event/:id", function(){
     $id = params("id");
     $event = s\EventService::get($id);
-    return u\JSON::encode($event);
+    $serializer = new u\JSON();
+    $serializer->addFilter(new u\Filter\Event());
+    return $serializer->encode($event);
 });
 
 dispatch("/group", function(){
     $page = isset($_GET["page"]) ? (int)$_GET["page"] : null;
     $qnt  = isset($_GET["qnt"]) ? (int)$_GET["qnt"] : null;
     $groups = s\GroupService::getAll($page, $qnt);
-    return u\JSON::encode($groups);
+    $serializer = new u\JSON();
+    return $serializer->encode($groups);
 });
 
 dispatch("/group/:id", function(){
     $id = params("id");
     $group = s\GroupService::get($id);
-    return u\JSON::encode($group);
+    $serializer = new u\JSON();
+    return $serializer->encode($group);
 });
 
 run();
