@@ -29,6 +29,7 @@ dispatch("/event", function(){
     $qnt  = isset($_GET["qnt"]) ? (int)$_GET["qnt"] : null;
     $events = s\EventService::getAll($page, $qnt);
     $serializer = new u\JSON();
+    $serializer->addFilter(new u\Filter\EventArray());
     return $serializer->encode($events);
 });
 
