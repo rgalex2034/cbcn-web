@@ -13,6 +13,16 @@ class Event implements u\Filter{
         return array(
             "id" => $data["id"],
             "title" => $data["name"],
+            //TODO: This is a subtitle place holder.
+            "subtitle" => "This is a placeholder",
+            //TODO: This is a place holder description
+            "description" => "Illo earum et omnis adipisci ut sit est. Modi fuga illo sit cum. Amet cumque aliquam nostrum quam. Repudiandae ex hic est iusto. Et non autem aut. Molestias ratione in explicabo.
+
+Occaecati iusto et voluptatem voluptatum. Qui porro ducimus placeat aliquid eligendi sit quidem nam. Et optio pariatur excepturi in aut pariatur.
+
+Itaque sint atque doloribus rem necessitatibus dicta quod sit. Quam saepe doloremque aliquam qui. Voluptatum debitis sit nam temporibus. Illo sit sed amet.
+
+Animi quia velit quos qui ratione. Reprehenderit consequatur ab totam sit harum. Et dicta et et repellat. In quae possimus tenetur atque itaque fugiat doloremque ipsam.",
             "duration" => array(
                 "start" => array(
                         "day" => date("d", $time),
