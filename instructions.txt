@@ -1,6 +1,6 @@
 -> Obrir app docker
 -> Engegar server i demés: docker-compose up
--> ???: sudo docker exec -it cbcn-web_mysql_1 bash (pass: root)
+-> Entrar en el docker con bash (i poder executar mysql): sudo docker exec -it cbcn-web_mysql_1 bash (pass: root)
 -> DROP & CREATE: mysql -u root -p < create_database.sql
 -> Crear files database: mysql -u root -p < sample_data.sql
 
