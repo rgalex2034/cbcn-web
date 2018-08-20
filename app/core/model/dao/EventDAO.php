@@ -7,14 +7,20 @@ use PauSabe\CBCN\model\dao\proxies;
 class EventDAO extends MysqlDAO{
 
     protected function onCreate($event, $conn){
-        $sql = "INSERT INTO event(name, `date`, place, url, image_full, image_low, contact_email, `group`)
-        VALUES(:name, :date, :place, :url, :image_full, :image_low, :contact_email, :group)";
+        $sql = "INSERT INTO event(name, subtitle, description, `date`, date_end,
+            place, price, url, image_full, image_low, contact_email, `group`)
+            VALUES(:name, :subtitle, :description, :date, :date_end,
+            :place, :price, :url, :image_full, :image_low, :contact_email, :group)";
 
         $stmnt = $conn->prepare($sql);
         $stmnt->bindValue(":name", $event->getName());
+        $stmnt->bindValue(":subtitle", $event->getSubtitle());
+        $stmnt->bindValue(":description", $event->getDescription());
         $stmnt->bindValue(":date", $event->getDate());
+        $stmnt->bindValue(":date_end", $event->getDateEnd());
         $place = $event->getPlace();
         $stmnt->bindValue(":place", is_null($place) || !$place->getId() ? null : $place->getId());
+        $stmnt->bindValue(":price", $event->getPrice());
         $stmnt->bindValue(":url", $event->getUrl());
         $stmnt->bindValue(":image_full", $event->getImageFUll());
         $stmnt->bindValue(":image_low", $event->getImageLow());
@@ -28,7 +34,8 @@ class EventDAO extends MysqlDAO{
     }
 
     protected function onRead($id, $conn){
-        $sql = "SELECT id, name, `date`, place, url, contact_email, image_full, image_low, `group`
+        $sql = "SELECT id, name, subtitle, description, `date`, date_end, place,
+                       price, url, contact_email, image_full, image_low, `group`
                 FROM event
                 WHERE id = :id";
 
@@ -44,7 +51,8 @@ class EventDAO extends MysqlDAO{
     }
 
     protected function onReadAll($conn, $page, $qnt){
-        $sql = "SELECT id, name, `date`, place, url, contact_email, image_full, image_low, `group`
+        $sql = "SELECT id, name, subtitle, description, `date`, date_end, place,
+            price, url, contact_email, image_full, image_low, `group`
                 FROM event";
 
         $limit = MysqlDAO::getLimit($page, $qnt);
@@ -62,16 +70,22 @@ class EventDAO extends MysqlDAO{
 
     protected function onUpdate($object, $conn){
         $sql = "UPDATE event
-                SET name = :name, `date` = :date, place = :place, url = :url,
-                    image_full = :image_full, image_low = :image_low
+                SET name = :name, subtitle = :subtitle,
+                    description = :description, `date` = :date,
+                    date_end = :date_end, place = :place, price = :price,
+                    url = :url, image_full = :image_full, image_low = :image_low
                     contact_email = :contact_email, `group` = :group
                 WHERE id = :id";
 
         $stmnt = $conn->prepare($sql);
         $stmnt->bindValue(":name", $object->getName());
+        $stmnt->bindValue(":subtitle", $object->getSubtitle());
+        $stmnt->bindValue(":description", $object->getDescription());
         $stmnt->bindValue(":date", $object->getDate());
+        $stmnt->bindValue(":date_end", $object->getDateEnd());
         $place = $object->getPlace();
         $stmnt->bindValue(":place", is_null($place) || !$place->getId() ? null : $place->getId());
+        $stmnt->bindValue(":price", $object->getPrice());
         $stmnt->bindValue(":url", $object->getUrl());
         $stmnt->bindValue(":image_full", $object->getImageFull());
         $stmnt->bindValue(":image_low", $object->getImageLow());
@@ -94,7 +108,10 @@ class EventDAO extends MysqlDAO{
     }
 
     private function createEventFromData($data){
-        $event = new proxies\EventProxy($data["name"], $data["date"], null, $data["url"], $data["image_full"], $data["image_low"], $data["contact_email"], null);
+        $event = new proxies\EventProxy($data["name"], $data["subtitle"],
+            $data["description"], $data["date"], $data["date_end"], null,
+            $data["price"], $data["url"], $data["image_full"],
+            $data["image_low"], $data["contact_email"], null);
         $event->setId($data["id"]);
         $event->setGroupId($data["group"]);
         $event->setPlaceid($data["place"]);

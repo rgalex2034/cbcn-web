@@ -7,11 +7,12 @@ use PauSabe\CBCN\model\classes\Place;
 class PlaceDAO extends MysqlDAO{
 
     protected function onCreate($object, $conn){
-        $sql = "INSERT INTO place (address, latitude, longitude)
-                VALUES (:address, :latitude, :longitude)";
+        $sql = "INSERT INTO place (address, short_address, latitude, longitude)
+                VALUES (:address, :short_address, :latitude, :longitude)";
 
         $stmnt = $conn->prepare($sql);
         $stmnt->bindValue(":address", $object->getAddress());
+        $stmnt->bindValue(":short_address", $object->getShortAddress());
         $stmnt->bindValue(":latitude", $object->getLatitude());
         $stmnt->bindValue(":longitude", $object->getLongitude());
         $result = $stmnt->execute();
@@ -20,7 +21,7 @@ class PlaceDAO extends MysqlDAO{
     }
 
     protected function onRead($id, $conn){
-        $sql = "SELECT id, address, latitude, longitude
+        $sql = "SELECT id, address, short_address, latitude, longitude
                 FROM place
                 WHERE id = :id";
 
@@ -36,7 +37,7 @@ class PlaceDAO extends MysqlDAO{
     }
 
     protected function onReadAll($conn, $page, $qnt){
-        $sql = "SELECT id, address, latitude, longitude
+        $sql = "SELECT id, address, short_address, latitude, longitude
                 FROM place";
 
         $limit = MysqlDAO::getLimit($page, $qnt);
@@ -54,11 +55,13 @@ class PlaceDAO extends MysqlDAO{
 
     protected function onUpdate($object, $conn){
         $sql = "UPDATE place
-                SET address = :address, latitude = :latitude, longitude = :longitude
+                SET address = :address, short_address = :short_address,
+                    latitude = :latitude, longitude = :longitude
                 WHERE id = :id";
 
         $stmnt = $conn->prepare($sql);
         $stmnt->bindValue(":address", $object->getAddress());
+        $stmnt->bindValue(":short_address", $object->getShortAddress());
         $stmnt->bindValue(":latitude", $object->getLatitude());
         $stmnt->bindValue(":longitude", $object->getLongitude());
         $stmnt->bindValue(":id", $object->getId());
@@ -77,7 +80,7 @@ class PlaceDAO extends MysqlDAO{
     }
 
     private function createPlaceFromData($data){
-        $place = new Place($data["address"], $data["latitude"], $data["longitude"]);
+        $place = new Place($data["address"], $data["short_address"], $data["latitude"], $data["longitude"]);
         $place->setId($data["id"]);
         return $place;
     }

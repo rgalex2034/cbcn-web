@@ -8,12 +8,14 @@ class Place implements JSON\JsonSerializable{
     
     private $id;
     private $address;
+    private $short_address;
     private $latitude;
     private $longitude;
 
-    public function __construct($address, $latitude = null, $longitude = null){
+    public function __construct($address, $short_address, $latitude = null, $longitude = null){
         $this->id = null;
         $this->address = strval($address);
+        $this->short_address = strval($short_address);
         $this->latitude = floatval($latitude);
         $this->longitude = floatval($longitude);
     }
@@ -32,6 +34,14 @@ class Place implements JSON\JsonSerializable{
 
     public function setAdrress($address){
         $this->address = strval($address);
+    }
+
+    public function getShortAddress(){
+        return $this->short_address;
+    }
+
+    public function setShortAdrress($short_address){
+        $this->short_address = strval($short_address);
     }
 
     public function getCoordinates(){

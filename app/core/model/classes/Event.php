@@ -10,21 +10,31 @@ class Event implements JSON\JsonSerializable{
 
     private $id;
     private $name;
+    private $subtitle;
+    private $description;
     private $date;
+    private $date_end;
     protected $place;
+    private $price;
     private $url;
     private $image_full;
     private $image_low;
     private $contact_email;
     protected $group;
 
-    public function __construct($name, $date = null, Place $place = null,
-                                $url = null, $image_full = null, $image_low = null,
-                                $contact_email = null, Group $group = null){
+    public function __construct($name, $subtitle = null, $description = null,
+                                $date = null, $date_end = null, Place $place = null,
+                                $price = null, $url = null, $image_full = null,
+                                $image_low = null, $contact_email = null,
+                                Group $group = null){
         $this->id = null;
         $this->name = $name;
+        $this->setSubtitle($subtitle);
+        $this->setDescription($description);
         $this->setDate($date);
+        $this->setDateEnd($date_end);
         $this->place = $place;
+        $this->price = $price;
         $this->url = strval($url);
         $this->image_full = strval($image_full);
         $this->image_low = strval($image_low);
@@ -48,6 +58,22 @@ class Event implements JSON\JsonSerializable{
         $this->name = strval($name);
     }
 
+    public function getSubtitle(){
+        return $this->subtitle;
+    }
+
+    public function setSubtitle($subtitle){
+        $this->subtitle = strval($subtitle);
+    }
+
+    public function getDescription(){
+        return $this->description;
+    }
+
+    public function setDescription($description){
+        $this->description = strval($description);
+    }
+
     public function getDate(){
         return $this->date;
     }
@@ -57,12 +83,29 @@ class Event implements JSON\JsonSerializable{
         $this->date = $date === false ? null : $date;
     }
 
+    public function getDateEnd(){
+        return $this->date_end;
+    }
+
+    public function setDateEnd($date_end){
+        $date_end = is_null($date_end) ? null : date("Y-m-d H:i:s", strtotime($date_end));
+        $this->date_end = $date_end === false ? null : $date_end;
+    }
+
     public function getPlace(){
         return $this->place;
     }
 
     public function setPlace(Place $place){
         $this->place = $place;
+    }
+
+    public function getPrice(){
+        return $this->price;
+    }
+
+    public function setPrice($price){
+        $this->price = $price;
     }
 
     public function getUrl(){
@@ -109,8 +152,12 @@ class Event implements JSON\JsonSerializable{
         return array(
             "id" => $this->getId(),
             "name" => $this->getName(),
+            "subtitle" => $this->getSubtitle(),
+            "description" => $this->getDescription(),
             "date" => $this->getDate(),
+            "date_end" => $this->getDateEnd(),
             "place" => $this->getPlace()->getId(),
+            "price" => $this->getPrice(),
             "url" => $this->getUrl(),
             "image_full" => $this->getImageFull(),
             "image_low" => $this->getImageLow(),
