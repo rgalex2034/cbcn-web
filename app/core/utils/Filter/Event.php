@@ -7,7 +7,9 @@ use PauSabe\CBCN\service as s;
 class Event implements u\Filter{
 
     public function filter($data){
-        $place = s\PlaceService::get($data["place"]);
+        $place = $data->getPlace();
+        $group = $data->getGroup();
+        $data = $data->jsonSerialize();
         $time = strtotime($data["date"]);
         $end_time = strtotime($data["date_end"]);
         return array(
@@ -36,7 +38,7 @@ class Event implements u\Filter{
                 "url_thumbnail" => $data["image_low"],
             ),
             "price" => $data["price"],
-            "location" => array(
+            "location" => !$place ? null : array(
                 "latitude" => $place->getLatitude(),
                 "longitude" => $place->getLongitude(),
                 "address" => array(
@@ -47,7 +49,8 @@ class Event implements u\Filter{
             "url_info" => $data["url"],
             //TODO: Placeholder organizer info
             "organizer" => array(
-                "name" => "Alex el puto amo",
+                "id" => $group ? $group->getId() : null,
+                "name" => $group ? $group->getName() : null,
                 "email" => $data["contact_email"],
                 "mobile" => "696969696"
             )

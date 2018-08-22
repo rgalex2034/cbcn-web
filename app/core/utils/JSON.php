@@ -10,9 +10,6 @@ class JSON{
     private $filters = [];
 
     public function encode($data){
-        //Extract data
-        if($data instanceof JsonSerializable)
-            $data = $data->jsonSerialize();
         //Pass filters
         foreach($this->filters as $filter){
             $data = $filter->filter($data);
