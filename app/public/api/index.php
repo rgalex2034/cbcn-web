@@ -46,6 +46,7 @@ dispatch("/group", function(){
     $qnt  = isset($_GET["qnt"]) ? (int)$_GET["qnt"] : null;
     $groups = s\GroupService::getAll($page, $qnt);
     $serializer = new u\JSON();
+    $serializer->addFilter(new u\Filter\GroupArray());
     return $serializer->encode($groups);
 });
 
@@ -53,6 +54,7 @@ dispatch("/group/:id", function(){
     $id = params("id");
     $group = s\GroupService::get($id);
     $serializer = new u\JSON();
+    $serializer->addFilter(new u\Filter\Group());
     return $serializer->encode($group);
 });
 

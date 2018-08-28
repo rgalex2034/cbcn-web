@@ -9,8 +9,10 @@ class GroupService{
 
     private static function newGroup($name, $place_id = null, $description = null,
                                 $url_image = null, $contact_email = null,
-                                $district = null){
-        $group = new c\Group($name, null, $description, $url_image, $contact_email, $district);
+                                $contact_phone = null, $district = null){
+
+        $group = new c\Group($name, null, $description, $url_image,
+            $contact_email, $contact_phone, $district);
 
         if(!is_null($place_id)){
             $pl_dao = new d\PlaceDAO();
@@ -23,8 +25,10 @@ class GroupService{
 
     public static function create($name, $place_id = null, $description = null,
                                 $url_image = null, $contact_email = null,
-                                $district = null){
-        $group = self::newGroup($name, $place_id, $description, $url_image, $contact_email, $district);
+                                $contact_phone = null, $district = null){
+
+        $group = self::newGroup($name, $place_id, $description, $url_image,
+            $contact_email, $contact_phone, $district);
 
         $gr_dao = new d\GroupDAO();
         $gr_dao->create($group);
@@ -34,8 +38,10 @@ class GroupService{
 
     public static function update($id, $name, $place_id = null, $description = null,
                                 $url_image = null, $contact_email = null,
-                                $district = null){
-        $group = self::newGroup($name, $place_id, $description, $url_image, $contact_email, $district);
+                                $contact_phone = null, $district = null){
+
+        $group = self::newGroup($name, $place_id, $description, $url_image,
+            $contact_email, $contact_phone, $district);
 
         $gr_dao = new d\GroupDAO();
         return $gr_dao->update($group);
