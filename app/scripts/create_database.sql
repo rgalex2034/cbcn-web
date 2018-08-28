@@ -18,6 +18,7 @@ CREATE TABLE `group`(
     description VARCHAR(500),
     url_image VARCHAR(100),
     contact_email VARCHAR(100),
+    contact_phone VARCHAR(100),
     district VARCHAR(50),
     PRIMARY KEY(id),
     FOREIGN KEY(place) REFERENCES place(id) ON DELETE SET NULL
@@ -35,7 +36,9 @@ CREATE TABLE event(
     url VARCHAR(100),
     image_full VARCHAR(100),
     image_low VARCHAR(100),
+    organizer VARCHAR(100),
     contact_email VARCHAR(100),
+    contact_phone VARCHAR(100),
     `group` INT,
     PRIMARY KEY(id),
     FOREIGN KEY(`group`) REFERENCES `group`(id) ON DELETE SET NULL,

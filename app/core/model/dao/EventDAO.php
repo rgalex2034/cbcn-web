@@ -8,9 +8,11 @@ class EventDAO extends MysqlDAO{
 
     protected function onCreate($event, $conn){
         $sql = "INSERT INTO event(name, subtitle, description, `date`, date_end,
-            place, price, url, image_full, image_low, contact_email, `group`)
+            place, price, url, image_full, image_low, organizer, contact_email,
+            contact_phone, `group`)
             VALUES(:name, :subtitle, :description, :date, :date_end,
-            :place, :price, :url, :image_full, :image_low, :contact_email, :group)";
+            :place, :price, :url, :image_full, :image_low, :organizer,
+            :contact_email, :contact_phone, :group)";
 
         $stmnt = $conn->prepare($sql);
         $stmnt->bindValue(":name", $event->getName());
@@ -24,7 +26,9 @@ class EventDAO extends MysqlDAO{
         $stmnt->bindValue(":url", $event->getUrl());
         $stmnt->bindValue(":image_full", $event->getImageFUll());
         $stmnt->bindValue(":image_low", $event->getImageLow());
+        $stmnt->bindValue(":organizer", $event->getOrganizer());
         $stmnt->bindValue(":contact_email", $event->getContactEmail());
+        $stmnt->bindValue(":contact_phone", $event->getContactPhone());
         $group = $event->getGroup();
         $stmnt->bindValue(":group", is_null($group) || !$group->getId() ? null : $group->getId());
 
@@ -35,7 +39,8 @@ class EventDAO extends MysqlDAO{
 
     protected function onRead($id, $conn){
         $sql = "SELECT id, name, subtitle, description, `date`, date_end, place,
-                       price, url, contact_email, image_full, image_low, `group`
+                       price, url, organizer, contact_email, contact_phone,
+                       image_full, image_low, `group`
                 FROM event
                 WHERE id = :id";
 
@@ -52,7 +57,8 @@ class EventDAO extends MysqlDAO{
 
     protected function onReadAll($conn, $page, $qnt){
         $sql = "SELECT id, name, subtitle, description, `date`, date_end, place,
-            price, url, contact_email, image_full, image_low, `group`
+            price, url, organizer, contact_email, contact_phone, image_full,
+            image_low, `group`
                 FROM event";
 
         $limit = MysqlDAO::getLimit($page, $qnt);
@@ -74,7 +80,8 @@ class EventDAO extends MysqlDAO{
                     description = :description, `date` = :date,
                     date_end = :date_end, place = :place, price = :price,
                     url = :url, image_full = :image_full, image_low = :image_low
-                    contact_email = :contact_email, `group` = :group
+                    organizer = :organizer, contact_email = :contact_email,
+                    contact_phone = :contact_phone, `group` = :group
                 WHERE id = :id";
 
         $stmnt = $conn->prepare($sql);
@@ -89,7 +96,9 @@ class EventDAO extends MysqlDAO{
         $stmnt->bindValue(":url", $object->getUrl());
         $stmnt->bindValue(":image_full", $object->getImageFull());
         $stmnt->bindValue(":image_low", $object->getImageLow());
+        $stmnt->bindValue(":organizer", $object->getOrganizer());
         $stmnt->bindValue(":contact_email", $object->getContactEmail());
+        $stmnt->bindValue(":contact_phone", $object->getContactPhone());
         $group = $object->getGroup();
         $stmnt->bindValue(":group", is_null($group) || !$group->getId() ? null : $group->getId());
         $stmnt->bindValue(":id", $object->getId());
@@ -111,7 +120,8 @@ class EventDAO extends MysqlDAO{
         $event = new proxies\EventProxy($data["name"], $data["subtitle"],
             $data["description"], $data["date"], $data["date_end"], null,
             $data["price"], $data["url"], $data["image_full"],
-            $data["image_low"], $data["contact_email"], null);
+            $data["image_low"], $data["organizer"], $data["contact_email"],
+            $data["contact_phone"], null);
         $event->setId($data["id"]);
         $event->setGroupId($data["group"]);
         $event->setPlaceid($data["place"]);

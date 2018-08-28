@@ -19,13 +19,16 @@ class Event implements JSON\JsonSerializable{
     private $url;
     private $image_full;
     private $image_low;
+    private $organizer;
     private $contact_email;
+    private $contact_phone;
     protected $group;
 
     public function __construct($name, $subtitle = null, $description = null,
                                 $date = null, $date_end = null, Place $place = null,
                                 $price = null, $url = null, $image_full = null,
-                                $image_low = null, $contact_email = null,
+                                $image_low = null, $organizer = null,
+                                $contact_email = null, $contact_phone = null,
                                 Group $group = null){
         $this->id = null;
         $this->name = $name;
@@ -35,10 +38,12 @@ class Event implements JSON\JsonSerializable{
         $this->setDateEnd($date_end);
         $this->place = $place;
         $this->price = $price;
-        $this->url = strval($url);
-        $this->image_full = strval($image_full);
-        $this->image_low = strval($image_low);
-        $this->contact_email = strval($contact_email);
+        $this->setUrl($url);
+        $this->setImageFull($image_full);
+        $this->setImageLow($image_low);
+        $this->setOrganizer($organizer);
+        $this->setContactEmail($contact_email);
+        $this->setContactPhone($contact_phone);
         $this->group = $group;
     }
 
@@ -132,12 +137,28 @@ class Event implements JSON\JsonSerializable{
         $this->image_low = strval($image_low);
     }
 
+    public function getOrganizer(){
+        return $this->organizer;
+    }
+
+    public function setOrganizer($organizer){
+        $this->organizer = strval($organizer);
+    }
+
     public function getContactEmail(){
         return $this->contact_email;
     }
 
     public function setContactEmail($contact_email){
         $this->contact_email = strval($contact_email);
+    }
+
+    public function getContactPhone(){
+        return $this->contact_phone;
+    }
+
+    public function setContactPhone($contact_phone){
+        $this->contact_phone = $contact_phone;
     }
 
     public function getGroup(){
@@ -161,7 +182,9 @@ class Event implements JSON\JsonSerializable{
             "url" => $this->getUrl(),
             "image_full" => $this->getImageFull(),
             "image_low" => $this->getImageLow(),
+            "organizer" => $this->getOrganizer(),
             "contact_email" => $this->getContactEmail(),
+            "contact_phone" => $this->getContactPhone(),
             "group" => $this->getGroup()->getId()
         );
     }

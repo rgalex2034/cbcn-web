@@ -47,12 +47,16 @@ class Event implements u\Filter{
                 )
             ),
             "url_info" => $data["url"],
-            //TODO: Placeholder organizer info
             "organizer" => array(
-                "id" => $group ? $group->getId() : null,
-                "name" => $group ? $group->getName() : null,
+                "name" => $data["organizer"],
                 "email" => $data["contact_email"],
-                "mobile" => "696969696"
+                "mobile" => $data["contact_phone"]
+            ),
+            "group" => !$group ? null : array(
+                "id" => $group->getId(),
+                "name" => $group->getName(),
+                "email" => $group->getContactEmail(),
+                "mobile" => $group->getContactPhone()
             )
         );
     }
