@@ -8,16 +8,17 @@ use PauSabe\CBCN\model\dao\proxies\GroupProxy;
 class GroupDAO extends MysqlDAO{
 
     protected function onCreate($group, $conn){
-        $sql = "INSERT INTO `group` (name, place, description, url_image,
-                    contact_email, contact_phone, district)
-                VALUES (:name, :place, :description, :url_image, :contact_email,
-                    :contact_phone, :district)";
+        $sql = "INSERT INTO `group` (name, place, description, url_info,
+                    url_image, contact_email, contact_phone, district)
+                VALUES (:name, :place, :description, :url_info, :url_image,
+                    :contact_email, :contact_phone, :district)";
 
         $stmnt = $conn->prepare($sql);
         $stmnt->bindValue(":name", $group->getName());
         $place = $group->getPlace();
         $stmnt->bindValue(":place", is_null($place) || !$place->getId() ? null : $place->getId());
         $stmnt->bindValue(":description", $group->getDescription());
+        $stmnt->bindValue(":url_info", $group->getUrlInfo());
         $stmnt->bindValue(":url_image", $group->getUrlImage());
         $stmnt->bindValue(":contact_email", $group->getContactEmail());
         $stmnt->bindValue(":contact_phone", $group->getContactPhone());
@@ -29,8 +30,8 @@ class GroupDAO extends MysqlDAO{
     }
 
     protected function onRead($id, $conn){
-        $sql = "SELECT id, name, place, description, url_image, contact_email,
-                    contact_phone, district
+        $sql = "SELECT id, name, place, description, url_info, url_image,
+                    contact_email, contact_phone, district
                 FROM `group`
                 WHERE id = :id";
 
@@ -46,8 +47,8 @@ class GroupDAO extends MysqlDAO{
     }
 
     protected function onReadAll($conn, $page, $qnt){
-        $sql = "SELECT id, name, place, description, url_image, contact_email,
-                    contact_phone, district
+        $sql = "SELECT id, name, place, description, url_info, url_image,
+                    contact_email, contact_phone, district
                 FROM `group`";
 
         $limit = MysqlDAO::getLimit($page, $qnt);
@@ -66,7 +67,8 @@ class GroupDAO extends MysqlDAO{
     protected function onUpdate($object, $conn){
         $sql = "UPDATE `group`
                 SET name = :name, place = :place, description = :description,
-                    url_image = :url_image, contact_email = :contact_email,
+                    url_info = :url_info, url_image = :url_image,
+                    contact_email = :contact_email,
                     contact_phone = :contact_phone, district = :district
                 WHERE id = :id";
 
@@ -75,6 +77,7 @@ class GroupDAO extends MysqlDAO{
         $place = $object->getPlace();
         $stmnt->bindValue(":place", is_null($place) || !$place->getId() ? null : $place->getId());
         $stmnt->bindValue(":description", $object->getDescription());
+        $stmnt->bindValue(":url_info", $object->getUrlInfo());
         $stmnt->bindValue(":url_image", $object->getUrlImage());
         $stmnt->bindValue(":contact_email", $object->getContactEmail());
         $stmnt->bindValue(":contact_phone", $object->getContactPhone());
@@ -96,8 +99,9 @@ class GroupDAO extends MysqlDAO{
 
     private function createGroupFromData($data){
         $group = new GroupProxy($data["name"], null, $data["description"],
-                                $data["url_image"], $data["contact_email"],
-                                $data["contact_phone"], $data["district"]);
+                                $data["url_info"], $data["url_image"],
+                                $data["contact_email"], $data["contact_phone"],
+                                $data["district"]);
         $group->setId($data["id"]);
         $group->setPlaceId($data["place"]);
         return $group;

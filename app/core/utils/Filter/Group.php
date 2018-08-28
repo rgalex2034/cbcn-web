@@ -13,6 +13,7 @@ class Group implements u\Filter{
             "id" => $data["id"],
             "name" => $data["name"],
             "description" => $data["description"],
+            "url_info" => $data["url_info"],
             "url_image" => $data["url_image"],
             "location" => !$place ? null : array(
                 "latitude" => $place->getLatitude(),
@@ -22,8 +23,6 @@ class Group implements u\Filter{
                     "long" => $place->getAddress()
                 )
             ),
-            //TODO: Placeholder info for url_info
-            "url_info" => "https://www.google.es/",
             "organizer" => [
                 "name" => $data["name"],
                 "email" => $data["contact_email"],

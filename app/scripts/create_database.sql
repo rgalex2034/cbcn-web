@@ -16,6 +16,7 @@ CREATE TABLE `group`(
     name VARCHAR(50) NOT NULL,
     place INT,
     description VARCHAR(500),
+    url_info VARCHAR(100),
     url_image VARCHAR(100),
     contact_email VARCHAR(100),
     contact_phone VARCHAR(100),
