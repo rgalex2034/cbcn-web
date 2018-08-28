@@ -4,6 +4,7 @@ services:
         build: .
         volumes:
             - ./app/public:/var/www/html
+            - ./app/private:/var/www/cbcn-private
             - ./app/core:/var/www/cbcn-core
             - ./app/lib:/var/www/cbcn-lib
             - ./app/scripts:/etc/cbcn/scripts
