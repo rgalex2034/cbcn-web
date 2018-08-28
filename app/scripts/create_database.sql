@@ -18,6 +18,7 @@ CREATE TABLE `group`(
     description VARCHAR(500),
     url_info VARCHAR(100),
     url_image VARCHAR(100),
+    responsible VARCHAR(50),
     contact_email VARCHAR(100),
     contact_phone VARCHAR(100),
     district VARCHAR(50),

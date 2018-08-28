@@ -9,9 +9,10 @@ class GroupDAO extends MysqlDAO{
 
     protected function onCreate($group, $conn){
         $sql = "INSERT INTO `group` (name, place, description, url_info,
-                    url_image, contact_email, contact_phone, district)
+                    url_image, responsible, contact_email, contact_phone,
+                    district)
                 VALUES (:name, :place, :description, :url_info, :url_image,
-                    :contact_email, :contact_phone, :district)";
+                    :responsible, :contact_email, :contact_phone, :district)";
 
         $stmnt = $conn->prepare($sql);
         $stmnt->bindValue(":name", $group->getName());
@@ -20,6 +21,7 @@ class GroupDAO extends MysqlDAO{
         $stmnt->bindValue(":description", $group->getDescription());
         $stmnt->bindValue(":url_info", $group->getUrlInfo());
         $stmnt->bindValue(":url_image", $group->getUrlImage());
+        $stmnt->bindValue(":responsible", $group->getResponsible());
         $stmnt->bindValue(":contact_email", $group->getContactEmail());
         $stmnt->bindValue(":contact_phone", $group->getContactPhone());
         $stmnt->bindValue(":district", $group->getDistrict());
@@ -31,7 +33,7 @@ class GroupDAO extends MysqlDAO{
 
     protected function onRead($id, $conn){
         $sql = "SELECT id, name, place, description, url_info, url_image,
-                    contact_email, contact_phone, district
+                    responsible, contact_email, contact_phone, district
                 FROM `group`
                 WHERE id = :id";
 
@@ -48,7 +50,7 @@ class GroupDAO extends MysqlDAO{
 
     protected function onReadAll($conn, $page, $qnt){
         $sql = "SELECT id, name, place, description, url_info, url_image,
-                    contact_email, contact_phone, district
+                    responsible, contact_email, contact_phone, district
                 FROM `group`";
 
         $limit = MysqlDAO::getLimit($page, $qnt);
@@ -68,7 +70,7 @@ class GroupDAO extends MysqlDAO{
         $sql = "UPDATE `group`
                 SET name = :name, place = :place, description = :description,
                     url_info = :url_info, url_image = :url_image,
-                    contact_email = :contact_email,
+                    responsible = :responsible, contact_email = :contact_email,
                     contact_phone = :contact_phone, district = :district
                 WHERE id = :id";
 
@@ -79,6 +81,7 @@ class GroupDAO extends MysqlDAO{
         $stmnt->bindValue(":description", $object->getDescription());
         $stmnt->bindValue(":url_info", $object->getUrlInfo());
         $stmnt->bindValue(":url_image", $object->getUrlImage());
+        $stmnt->bindValue(":responsible", $object->getResponsible());
         $stmnt->bindValue(":contact_email", $object->getContactEmail());
         $stmnt->bindValue(":contact_phone", $object->getContactPhone());
         $stmnt->bindValue(":district", $object->getDistrict());
@@ -100,8 +103,8 @@ class GroupDAO extends MysqlDAO{
     private function createGroupFromData($data){
         $group = new GroupProxy($data["name"], null, $data["description"],
                                 $data["url_info"], $data["url_image"],
-                                $data["contact_email"], $data["contact_phone"],
-                                $data["district"]);
+                                $data["responsible"], $data["contact_email"],
+                                $data["contact_phone"], $data["district"]);
         $group->setId($data["id"]);
         $group->setPlaceId($data["place"]);
         return $group;

@@ -13,20 +13,22 @@ class Group implements JSON\JsonSerializable{
     private $description;
     private $url_info;
     private $url_image;
+    private $responsible;
     private $contact_email;
     private $contact_phone;
     private $district;
 
     public function __construct($name, Place $place = null, $description = null,
                                 $url_info = null, $url_image = null,
-                                $contact_email = null, $contact_phone = null,
-                                $district = null){
+                                $responsible = null, $contact_email = null,
+                                $contact_phone = null, $district = null){
         $this->id = null;
         $this->name = strval($name);
         $this->place = $place;
         $this->description = strval($description);
         $this->url_info = strval($url_info);
         $this->url_image = strval($url_image);
+        $this->responsible = strval($responsible);
         $this->contact_email = strval($contact_email);
         $this->contact_phone = $contact_phone;
         $this->district = strval($district);
@@ -80,6 +82,14 @@ class Group implements JSON\JsonSerializable{
         $this->url_image = strval($url_image);
     }
 
+    public function getResponsible(){
+        return $this->responsible;
+    }
+
+    public function setResponsible($responsible){
+        $this->responsible = strval($responsible);
+    }
+
     public function getContactEmail(){
         return $this->contact_email;
     }
@@ -112,6 +122,7 @@ class Group implements JSON\JsonSerializable{
             "description" => $this->getDescription(),
             "url_info" => $this->getUrlInfo(),
             "url_image" => $this->getUrlImage(),
+            "responsible" => $this->getResponsible(),
             "contact_email" => $this->getContactEmail(),
             "contact_phone" => $this->getContactPhone(),
             "district" => $this->getDistrict()

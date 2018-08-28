@@ -23,8 +23,8 @@ class Group implements u\Filter{
                     "long" => $place->getAddress()
                 )
             ),
-            "organizer" => [
-                "name" => $data["name"],
+            "responsible" => [
+                "name" => $data["responsible"],
                 "email" => $data["contact_email"],
                 "mobile" => $data["contact_phone"]
             ]
