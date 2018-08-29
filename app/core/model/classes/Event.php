@@ -170,6 +170,8 @@ class Event implements JSON\JsonSerializable{
     }
 
     public function jsonSerialize(){
+        $group = $this->getGroup();
+        $place = $this->getPlace();
         return array(
             "id" => $this->getId(),
             "name" => $this->getName(),
@@ -177,7 +179,7 @@ class Event implements JSON\JsonSerializable{
             "description" => $this->getDescription(),
             "date" => $this->getDate(),
             "date_end" => $this->getDateEnd(),
-            "place" => $this->getPlace()->getId(),
+            "place" => $place ? $place->getId() : null,
             "price" => $this->getPrice(),
             "url" => $this->getUrl(),
             "image_full" => $this->getImageFull(),
@@ -185,7 +187,7 @@ class Event implements JSON\JsonSerializable{
             "organizer" => $this->getOrganizer(),
             "contact_email" => $this->getContactEmail(),
             "contact_phone" => $this->getContactPhone(),
-            "group" => $this->getGroup()->getId()
+            "group" => $group ? $group->getId() : null
         );
     }
 

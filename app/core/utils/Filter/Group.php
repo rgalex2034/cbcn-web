@@ -1,12 +1,14 @@
 <?php
 namespace PauSabe\CBCN\utils\Filter;
 
+use PauSabe\CBCN\model\classes as c;
 use PauSabe\CBCN\utils as u;
 use PauSabe\CBCN\service as s;
 
 class Group implements u\Filter{
 
     public function filter($data){
+        if(!($data instanceof c\Group)) return $data;
         $place = $data->getPlace();
         $data = $data->jsonSerialize();
         return array(

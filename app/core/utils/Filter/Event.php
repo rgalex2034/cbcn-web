@@ -3,10 +3,12 @@ namespace PauSabe\CBCN\utils\Filter;
 
 use PauSabe\CBCN\utils as u;
 use PauSabe\CBCN\service as s;
+use PauSabe\CBCN\model\classes as c;
 
 class Event implements u\Filter{
 
     public function filter($data){
+        if(!($data instanceof c\Event)) return $data;
         $place = $data->getPlace();
         $group = $data->getGroup();
         $data = $data->jsonSerialize();

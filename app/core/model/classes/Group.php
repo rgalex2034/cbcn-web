@@ -115,10 +115,11 @@ class Group implements JSON\JsonSerializable{
     }
 
     public function jsonSerialize(){
+        $place = $this->getPlace();
         return array(
             "id" => $this->getId(),
             "name" => $this->getName(),
-            "place" => $this->getPlace()->getId(),
+            "place" => $place ? $place->getId() : null,
             "description" => $this->getDescription(),
             "url_info" => $this->getUrlInfo(),
             "url_image" => $this->getUrlImage(),

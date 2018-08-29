@@ -12,7 +12,7 @@ class Place implements JSON\JsonSerializable{
     private $latitude;
     private $longitude;
 
-    public function __construct($address, $short_address, $latitude = null, $longitude = null){
+    public function __construct($address, $short_address = null, $latitude = null, $longitude = null){
         $this->id = null;
         $this->address = strval($address);
         $this->short_address = strval($short_address);

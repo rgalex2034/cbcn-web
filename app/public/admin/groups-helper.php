@@ -19,11 +19,13 @@ function save(){
 
     isset($place_data["id"]) && is_numeric($id = $place_data["id"]) ?
         s\PlaceService::update($id, $place_data["address"], $place_data) :
-        s\PlaceService::create($place_data["address"], $place_data);
+        $place_data["id"] = s\PlaceService::create($place_data["address"], $place_data);
+
+    $safe_post["place_id"] = $place_data["id"];
 
     isset($safe_post["id"]) && is_numeric($id = $safe_post["id"]) ?
         s\GroupService::update($id, $safe_post["name"], $safe_post->getOriginal()) :
-        s\GroupService::create($safe_pust["name"], $safe_post->getOriginal());
+        s\GroupService::create($safe_post["name"], $safe_post->getOriginal());
 
     response("Done!");
 }

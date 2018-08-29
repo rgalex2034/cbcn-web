@@ -1,6 +1,3 @@
-<?php
-include "../cbcn-core/autoloader.php";
-?>
 <!--html-->
     <!--head-->
         <meta charset="utf8" />

@@ -5,7 +5,10 @@ use PauSabe\CBCN\model\classes as c;
 use PauSabe\CBCN\service as s;
 
 $id = isset($_GET["id"]) ? $_GET["id"] : null;
-$group = $id ? s\GroupService::get($id) : new c\Group(null);
+
+$group = $id ? s\GroupService::get($id) : null;
+if(!$group) $group = new c\Group(null);
+
 $place = $group->getPlace() ?: new c\Place(null);
 ?>
 <!DOCTYPE html>
