@@ -1,0 +1,31 @@
+body > .top{
+  background-color: #eadf00;
+  padding: 5px 20px;
+}
+body > .menu{
+  background-color: #444444;
+  color: white;
+  padding: 10px 0;
+}
+body > .menu > ul{
+  display: flex;
+  margin-bottom: 0;
+}
+body > .menu > ul > li{
+  margin: 0 10px;
+  list-style: none;
+  border-bottom: 1px solid white;
+}
+
+body > .menu > ul > li a{
+  color: inherit;
+}
+body > .menu > ul > li a:hover{
+  text-decoration: none;
+}
+body > .content{
+    padding: 30px 40px;
+}
+.action-bar{
+    margin: 20px 0;
+}

@@ -4,11 +4,13 @@ namespace PauSabe\CBCN\service;
 
 use PauSabe\CBCN\model\dao as d;
 use PauSabe\CBCN\model\classes as c;
+use PauSabe\CBCN\utils as u;
 
 class PlaceService{
 
-    public static function create($address, $latitude = null, $longitude = null){
-        $place = new c\Place($address, $latitude, $longitude);
+    public static function create($address, $data = array()){
+        $safe = new u\SafeArray($data);
+        $place = new c\Place($address, $safe["short_address"], $safe["latitude"], $safe["longitude"]);
 
         $pl_dao = new d\PlaceDAO();
         $pl_dao->create($place);
@@ -16,8 +18,9 @@ class PlaceService{
         return $place->getId();
     }
 
-    public static function update($id, $address, $latitude = null, $longitude = null){
-        $place = new c\Place($address, $latitude, $longitude);
+    public static function update($id, $address, $data = array()){
+        $safe = new u\SafeArray($data);
+        $place = new c\Place($address, $safe["short_address"], $safe["latitude"], $safe["longitude"]);
         $place->setId($id);
 
         $pl_dao = new d\PlaceDAO();

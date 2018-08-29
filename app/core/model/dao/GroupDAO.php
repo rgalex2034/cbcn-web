@@ -91,7 +91,7 @@ class GroupDAO extends MysqlDAO{
     }
 
     protected function onDelete($object, $conn){
-        $sql = "DELETE FROM group
+        $sql = "DELETE FROM `group`
                 WHERE id = :id";
 
         $stmnt = $conn->prepare($sql);
