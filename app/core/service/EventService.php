@@ -67,4 +67,11 @@ class EventService{
         return $ev_dao->readAll($page, $qnt);
     }
 
+    public static function delete($id){
+        $ev = new c\Event(null);
+        $ev->setId($id);
+        $dao = new d\EventDAO();
+        return $dao->delete($ev);
+    }
+
 }
