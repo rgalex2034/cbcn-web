@@ -13,7 +13,7 @@ $events = s\EventService::getAll();
     <body>
         <?php require CBCN_PRIVATE_ROOT."/templates/top.php";?>
         <div class="content">
-            <h2>Llistat de grups</h2>
+            <h2>Llistat d'events</h2>
             <div class="action-bar">
                 <a href="event-edit.php" class="btn btn-success">Afegir</a>
             </div>

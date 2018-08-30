@@ -79,7 +79,7 @@ class EventDAO extends MysqlDAO{
                 SET name = :name, subtitle = :subtitle,
                     description = :description, `date` = :date,
                     date_end = :date_end, place = :place, price = :price,
-                    url = :url, image_full = :image_full, image_low = :image_low
+                    url = :url, image_full = :image_full, image_low = :image_low,
                     organizer = :organizer, contact_email = :contact_email,
                     contact_phone = :contact_phone, `group` = :group
                 WHERE id = :id";

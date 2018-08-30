@@ -4,24 +4,25 @@ namespace PauSabe\CBCN\service;
 
 use PauSabe\CBCN\model\dao as d;
 use PauSabe\CBCN\model\classes as c;
+use PauSabe\CBCN\utils as u;
 
 class EventService{
 
-    private static function newEvent($name, $date = null, $place_id = null,
-                                $url = null, $image_full = null, $image_low = null,
-                                $organizer = null, $contact_email = null,
-                                $contact_phone = null, $group_id = null){
+    private static function newEvent($name, $data = array()){
+        $safe = new u\SafeArray($data);
 
-        $event = new c\Event($name, $date, null, $url, $image_full, $image_low,
-            $organizer, $contact_email, $contact_phone);
+        $event = new c\Event($name, $safe["subtitle"], $safe["description"],
+            $safe["date"], $safe["date_end"], null, $safe["price"], $safe["url"],
+            $safe["image_full"], $safe["image_low"],
+            $safe["organizer"], $safe["contact_email"], $safe["contact_phone"]);
 
-        if(!is_null($place_id)){
+        if(is_numeric($place_id = $safe["place_id"])){
             $pl_dao = new d\PlaceDAO();
             $place = $pl_dao->read($place_id);
             $event->setPlace($place);
         }
 
-        if(!is_null($group_id)){
+        if(is_numeric($group_id = $safe["group_id"])){
             $gr_dao = new d\GroupDAO();
             $group = $gr_dao->read($group_id);
             $event->setGroup($group);
@@ -30,13 +31,9 @@ class EventService{
         return $event;
     }
 
-    public static function create($name, $date = null, $place_id = null,
-                                $url = null, $image_full = null, $image_low = null,
-                                $organizer = null, $contact_email = null,
-                                $contact_phone = null, $group_id = null){
+    public static function create($name, $data = array()){
 
-        $event = self::newEvent($name, $date, $place_id, $url, $image_full,
-            $image_low, $organizer, $contact_email, $contact_phone, $group_id);
+        $event = self::newEvent($name, $data);
 
         $ev_dao = new d\EventDAO();
         $ev_dao->create($event);
@@ -44,13 +41,9 @@ class EventService{
         return $event->getId();
     }
 
-    public static function update($id, $name, $date = null, $place_id = null,
-                                $url = null, $image_full = null, $image_low = null,
-                                $organizer = null,$contact_email = null,
-                                $contact_phone = null, $group_id = null){
+    public static function update($id, $name, $data = array()){
 
-        $event = self::newEvent($name, $date, $place_id, $url, $image_full,
-            $image_low, $organizer, $contact_email, $contact_phone, $group_id);
+        $event = self::newEvent($name, $data);
         $event->setId($id);
 
         $ev_dao = new d\EventDAO();

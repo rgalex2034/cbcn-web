@@ -13,7 +13,7 @@ class GroupService{
         $group = new c\Group($name, null, $safe["description"], $safe["url_info"], $safe["url_image"],
             $safe["responsible"], $safe["contact_email"], $safe["contact_phone"], $safe["district"]);
 
-        if(!is_null($place_id = $safe["place_id"])){
+        if(is_numeric($place_id = $safe["place_id"])){
             $pl_dao = new d\PlaceDAO();
             $place = $pl_dao->read($place_id);
             $group->setPlace($place);
