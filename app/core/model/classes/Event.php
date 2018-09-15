@@ -17,6 +17,7 @@ class Event implements JSON\JsonSerializable{
     protected $place;
     private $price;
     private $url;
+    private $rec_age;
     private $image_full;
     private $image_low;
     private $organizer;
@@ -119,6 +120,14 @@ class Event implements JSON\JsonSerializable{
 
     public function setUrl($url){
         $this->url = strval($url);
+    }
+
+    public function getRecommendedAge(){
+        return $this->rec_age;
+    }
+
+    public function setRecommendedAge($rec_age){
+        $this->rec_age = intval($rec_age);
     }
 
     public function getImageFull(){

@@ -77,6 +77,10 @@ $all_groups = s\GroupService::getAll();
                     <input type="text" name="url" class="form-control" value="<?=attr($event->getUrl()) ?: ""?>"/>
                 </div>
                 <div class="form-group">
+                    <label>Edat recomanada</label>
+                    <input type="number" name="rec_age" class="form-control" value="<?=attr($event->getRecommendedAge()) ?: ""?>"/>
+                </div>
+                <div class="form-group">
                     <label>Imatge</label>
                     <input type="text" name="image_full" class="form-control" value="<?=attr($event->getImageFull()) ?: ""?>"/>
                 </div>

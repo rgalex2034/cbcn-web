@@ -36,6 +36,7 @@ CREATE TABLE event(
     place INT,
     price DECIMAL(6,2),
     url VARCHAR(100),
+    rec_age INT,
     image_full VARCHAR(100),
     image_low VARCHAR(100),
     organizer VARCHAR(100),

@@ -15,6 +15,7 @@ class EventService{
             $safe["date"], $safe["date_end"], null, $safe["price"], $safe["url"],
             $safe["image_full"], $safe["image_low"],
             $safe["organizer"], $safe["contact_email"], $safe["contact_phone"]);
+        $event->setRecommendedAge($safe["rec_age"]);
 
         if(is_numeric($place_id = $safe["place_id"])){
             $pl_dao = new d\PlaceDAO();
