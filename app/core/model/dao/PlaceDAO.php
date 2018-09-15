@@ -36,7 +36,7 @@ class PlaceDAO extends MysqlDAO{
         return $place;
     }
 
-    protected function onReadAll($conn, $page, $qnt){
+    protected function onReadAll($conn, $page, $qnt, $filter){
         $sql = "SELECT id, address, short_address, latitude, longitude
                 FROM place";
 

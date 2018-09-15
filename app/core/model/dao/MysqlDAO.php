@@ -34,6 +34,19 @@ abstract class MysqlDAO extends AbstractDAO{
         return false;
     }
 
+    public function getWhere($fields){
+        if(!is_array($fields) || count($fields) == 0) return false;
+        $where = "WHERE 1=1 AND";
+        foreach($fields as $field)
+            $where .= " $field = :$field";
+        return $where;
+    }
+
+    public function setWhereFields(\PDOStatement $stmnt, $map){
+        foreach($map as $field => $value)
+            $stmnt->bindValue($field, $value);
+    }
+
     protected static function getLimit($page, $qnt){
         $limit = false;
         if(is_int($page) && is_int($page)){

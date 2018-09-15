@@ -56,16 +56,21 @@ class EventDAO extends MysqlDAO{
         return $event;
     }
 
-    protected function onReadAll($conn, $page, $qnt){
+    protected function onReadAll($conn, $page, $qnt, $filter){
+        if(!is_array($filter)) $filter = [];
         $sql = "SELECT id, name, subtitle, description, `date`, date_end, place,
             price, url, rec_age, organizer, contact_email, contact_phone, image_full,
             image_low, `group`
                 FROM event";
 
+        $where = MysqlDAO::getWhere(array_keys($filter));
+        if($where) $sql .= " $where";
+
         $limit = MysqlDAO::getLimit($page, $qnt);
         if($limit) $sql .= " $limit";
 
         $stmnt = $conn->prepare($sql);
+        if($where) MysqlDAO::setWhereFields($stmnt, $filter);
         $stmnt->execute();
 
         $events = array();

@@ -27,7 +27,8 @@ dispatch("/place/:id", function(){
 dispatch("/event", function(){
     $page = isset($_GET["page"]) ? (int)$_GET["page"] : null;
     $qnt  = isset($_GET["qnt"]) ? (int)$_GET["qnt"] : null;
-    $events = s\EventService::getAll($page, $qnt);
+    $filter = isset($_GET["filter"]) ? $_GET["filter"] : null;
+    $events = s\EventService::getAll($page, $qnt, $filter);
     $serializer = new u\JSON();
     $serializer->addFilter(new u\Filter\EventArray());
     return $serializer->encode($events);

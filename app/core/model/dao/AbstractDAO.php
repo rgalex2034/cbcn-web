@@ -31,9 +31,9 @@ abstract class AbstractDAO{
         return $this->onRead($id, $conn);
     }
 
-    public function readAll($page = null, $qnt = null){
+    public function readAll($page = null, $qnt = null, $filter = null){
         $conn = self::getConnection();
-        return $this->onReadAll($conn, $page, $qnt);
+        return $this->onReadAll($conn, $page, $qnt, $filter);
     }
 
     public function update($object){
@@ -48,7 +48,7 @@ abstract class AbstractDAO{
 
     protected abstract function onCreate($object, $context);
     protected abstract function onRead($id, $context);
-    protected abstract function onReadAll($context, $page, $qnt);
+    protected abstract function onReadAll($context, $page, $qnt, $filter);
     protected abstract function onUpdate($object, $context);
     protected abstract function onDelete($object, $context);
 }

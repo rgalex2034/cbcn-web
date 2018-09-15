@@ -48,7 +48,7 @@ class GroupDAO extends MysqlDAO{
         return $group;
     }
 
-    protected function onReadAll($conn, $page, $qnt){
+    protected function onReadAll($conn, $page, $qnt, $filter){
         $sql = "SELECT id, name, place, description, url_info, url_image,
                     responsible, contact_email, contact_phone, district
                 FROM `group`";

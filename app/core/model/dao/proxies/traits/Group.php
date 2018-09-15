@@ -18,7 +18,7 @@ trait Group{
         if(is_null($this->group_id)) $this->is_group_loaded = true;
     }
 
-    public function setGroup(classes\Group $group){
+    public function setGroup(classes\Group $group = null){
         $this->is_group_loaded = true;
         return parent::setGroup($group);
     }

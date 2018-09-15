@@ -56,9 +56,9 @@ class EventService{
         return $ev_dao->read($id);
     }
 
-    public static function getAll($page = null, $qnt = null){
+    public static function getAll($page = null, $qnt = null, $filter = null){
         $ev_dao = new d\EventDAO();
-        return $ev_dao->readAll($page, $qnt);
+        return $ev_dao->readAll($page, $qnt, $filter);
     }
 
     public static function delete($id){

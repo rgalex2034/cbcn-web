@@ -37,7 +37,7 @@ class Event implements JSON\JsonSerializable{
         $this->setDescription($description);
         $this->setDate($date);
         $this->setDateEnd($date_end);
-        $this->setPlace($place);
+        $this->place = $place;
         $this->setPrice($price);
         $this->setUrl($url);
         $this->setImageFull($image_full);

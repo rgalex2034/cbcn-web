@@ -18,7 +18,7 @@ trait Place{
         if(is_null($this->place_id)) $this->is_place_loaded = true;
     }
 
-    public function setPlace(classes\Place $place){
+    public function setPlace(classes\Place $place = null){
         $this->is_place_loaded = true;
         return parent::setPlace($place);
     }
