@@ -32,13 +32,13 @@ class Event implements JSON\JsonSerializable{
                                 $contact_email = null, $contact_phone = null,
                                 Group $group = null){
         $this->id = null;
-        $this->name = $name;
+        $this->setName($name);
         $this->setSubtitle($subtitle);
         $this->setDescription($description);
         $this->setDate($date);
         $this->setDateEnd($date_end);
-        $this->place = $place;
-        $this->price = $price;
+        $this->setPlace($place);
+        $this->setPrice($price);
         $this->setUrl($url);
         $this->setImageFull($image_full);
         $this->setImageLow($image_low);
@@ -102,7 +102,7 @@ class Event implements JSON\JsonSerializable{
         return $this->place;
     }
 
-    public function setPlace(Place $place){
+    public function setPlace(Place $place = null){
         $this->place = $place;
     }
 
@@ -111,7 +111,7 @@ class Event implements JSON\JsonSerializable{
     }
 
     public function setPrice($price){
-        $this->price = $price;
+        $this->price = floatval($price);
     }
 
     public function getUrl(){
@@ -174,7 +174,7 @@ class Event implements JSON\JsonSerializable{
         return $this->group;
     }
 
-    public function setGroup(Group $group){
+    public function setGroup(Group $group = null){
         $this->group = $group;
     }
 
