@@ -5,13 +5,19 @@ require_once("../../cbcn-lib/limonade.php");
 use PauSabe\CBCN\service as s;
 use PauSabe\CBCN\utils as u;
 
+function getCommonParams(){
+    $page = isset($_GET["page"]) ? (int)$_GET["page"] : null;
+    $qnt  = isset($_GET["qnt"]) ? (int)$_GET["qnt"] : null;
+    $filter = isset($_GET["filter"]) ? $_GET["filter"] : null;
+    return [$page, $qnt, $filter];
+}
+
 dispatch("/", function(){
     return "Welcome to CBCN REST API!";
 });
 
 dispatch("/place", function(){
-    $page = isset($_GET["page"]) ? (int)$_GET["page"] : null;
-    $qnt  = isset($_GET["qnt"]) ? (int)$_GET["qnt"] : null;
+    list($page, $qnt) = getCommonParams();
     $places = s\PlaceService::getAll($page, $qnt);
     $serializer = new u\JSON();
     return $serializer->encode($places);
@@ -25,9 +31,7 @@ dispatch("/place/:id", function(){
 });
 
 dispatch("/event", function(){
-    $page = isset($_GET["page"]) ? (int)$_GET["page"] : null;
-    $qnt  = isset($_GET["qnt"]) ? (int)$_GET["qnt"] : null;
-    $filter = isset($_GET["filter"]) ? $_GET["filter"] : null;
+    list($page, $qnt, $filter) = getCommonParams();
     $events = s\EventService::getAll($page, $qnt, $filter);
     $serializer = new u\JSON();
     $serializer->addFilter(new u\Filter\EventArray());
@@ -43,8 +47,7 @@ dispatch("/event/:id", function(){
 });
 
 dispatch("/group", function(){
-    $page = isset($_GET["page"]) ? (int)$_GET["page"] : null;
-    $qnt  = isset($_GET["qnt"]) ? (int)$_GET["qnt"] : null;
+    list($page, $qnt) = getCommonParams();
     $groups = s\GroupService::getAll($page, $qnt);
     $serializer = new u\JSON();
     $serializer->addFilter(new u\Filter\GroupArray());
