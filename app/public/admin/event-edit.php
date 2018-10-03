@@ -28,7 +28,7 @@ $all_groups = s\GroupService::getAll();
                 <input type="hidden" name="id" value="<?=$event->getId()?>" />
                 <div class="form-group">
                     <label>Nom</label>
-                    <input type="text" name="name" class="form-control" value="<?=attr($event->getName()) ?: ""?>"/>
+                    <input required type="text" name="name" class="form-control" value="<?=attr($event->getName()) ?: ""?>"/>
                 </div>
                 <div class="form-group">
                     <label>Subtítol</label>
@@ -40,7 +40,7 @@ $all_groups = s\GroupService::getAll();
                 </div>
                 <div class="form-group">
                     <label>Data</label>
-                    <input type="text" name="date" class="form-control" value="<?=attr($event->getDate()) ?: ""?>" />
+                    <input required type="text" name="date" class="form-control" value="<?=attr($event->getDate()) ?: ""?>" />
                 </div>
                 <div class="form-group">
                     <label>Data fi</label>
@@ -82,11 +82,11 @@ $all_groups = s\GroupService::getAll();
                 </div>
                 <div class="form-group">
                     <label>Imatge</label>
-                    <input type="text" name="image_full" class="form-control" value="<?=attr($event->getImageFull()) ?: ""?>"/>
+                    <input required type="text" name="image_full" class="form-control" value="<?=attr($event->getImageFull()) ?: ""?>"/>
                 </div>
                 <div class="form-group">
                     <label>Thumbnail</label>
-                    <input type="text" name="image_low" class="form-control" value="<?=attr($event->getImageLow()) ?: ""?>"/>
+                    <input required type="text" name="image_low" class="form-control" value="<?=attr($event->getImageLow()) ?: ""?>"/>
                 </div>
                 <div class="form-group">
                     <label>Grup</label>

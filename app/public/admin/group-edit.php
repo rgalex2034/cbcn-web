@@ -25,7 +25,7 @@ $place = $group->getPlace() ?: new c\Place(null);
                 <input type="hidden" name="id" value="<?=$group->getId()?>" />
                 <div class="form-group">
                     <label>Nom</label>
-                    <input type="text" name="name" class="form-control" value="<?=attr($group->getName()) ?: ""?>"/>
+                    <input required type="text" name="name" class="form-control" value="<?=attr($group->getName()) ?: ""?>"/>
                 </div>
                 <div class="form-group">
                     <label>Descripció</label>
