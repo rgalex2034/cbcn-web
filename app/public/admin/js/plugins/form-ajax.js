@@ -29,7 +29,7 @@
         ev.preventDefault();
         var $form = $(this);
 
-        var has_files = $("input[type=file]:not([disabled])", $form).length > 0;
+        var has_files = $("input[name][type=file]:not([disabled])", $form).length > 0;
 
         var url = $form.attr("action");
         //Default to current page if no action provided
@@ -49,6 +49,8 @@
             params.contentType = false;
         }
 
+        $form.trigger("ajax:before", req, params);
+
         var req = $.ajax(params).then(function(response, textStatus, jqxhr){
             $form.trigger("ajax:done", response, textStatus, jqxhr);
         }).catch(function(jqxhr, textStatus){
@@ -57,7 +59,6 @@
             $form.trigger("ajax:always");
         });
 
-        $form.trigger("ajax:before", req, params);
     };
 
     $.fn.formAjax = function(){

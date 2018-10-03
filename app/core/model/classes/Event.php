@@ -85,7 +85,7 @@ class Event implements JSON\JsonSerializable{
     }
 
     public function setDate($date){
-        $date = is_null($date) ? null : date("Y-m-d H:i:s", strtotime($date));
+        $date = !$date ? null : date("Y-m-d H:i:s", strtotime($date));
         $this->date = $date === false ? null : $date;
     }
 
@@ -94,7 +94,7 @@ class Event implements JSON\JsonSerializable{
     }
 
     public function setDateEnd($date_end){
-        $date_end = is_null($date_end) ? null : date("Y-m-d H:i:s", strtotime($date_end));
+        $date_end = !$date_end ? null : date("Y-m-d H:i:s", strtotime($date_end));
         $this->date_end = $date_end === false ? null : $date_end;
     }
 
