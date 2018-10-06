@@ -41,14 +41,24 @@ abstract class MysqlDAO extends AbstractDAO{
     public function getWhere($fields){
         if(!is_array($fields) || count($fields) == 0) return false;
         $where = "WHERE 1=1 AND";
-        foreach($fields as $field)
+        $valid_fields = $this->getFields();
+
+        $ok = false;
+        foreach($fields as $field){
+            if(!in_array($field, $valid_fields)) continue;
+            if(!$ok) $ok = true; //Once one field is valid, set it as okey.
             $where .= " $field = :$field";
-        return $where;
+        }
+
+        return $ok ? $where : false;
     }
 
     public function setWhereFields(\PDOStatement $stmnt, $map){
-        foreach($map as $field => $value)
+        $valid_fields = $this->getFields();
+        foreach($map as $field => $value){
+            if(!in_array($field, $valid_fields)) continue;
             $stmnt->bindValue($field, $value);
+        }
     }
 
     protected static function getLimit($page, $qnt){
