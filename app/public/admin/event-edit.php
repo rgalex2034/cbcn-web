@@ -1,6 +1,7 @@
 <?php
 require_once "core.php";
 require_once "helpers/html.php";
+require_once "helpers/file.php";
 use PauSabe\CBCN\model\classes as c;
 use PauSabe\CBCN\service as s;
 
@@ -82,11 +83,12 @@ $all_groups = s\GroupService::getAll();
                 </div>
                 <div class="form-group">
                     <label>Imatge</label>
-                    <input required type="text" name="image_full" class="form-control" value="<?=attr($event->getImageFull()) ?: ""?>"/>
+                    <input <?=$id ? "" : "required"?> type="file" accept="image/*" name="image" />
+                    <input type="hidden" name="image_full" value="<?=$event->getImageFull()?>" />
+                    <input type="hidden" name="image_low" value="<?=$event->getImageLow()?>" />
                 </div>
                 <div class="form-group">
-                    <label>Thumbnail</label>
-                    <input required type="text" name="image_low" class="form-control" value="<?=attr($event->getImageLow()) ?: ""?>"/>
+                    <img class="full-width" src="<?=attr(($image = $event->getImageFull()) ? get_image_url($image) : "") ?: ""?>"/>
                 </div>
                 <div class="form-group">
                     <label>Grup</label>

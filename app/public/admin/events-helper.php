@@ -1,6 +1,7 @@
 <?php
 require_once "core.php";
 require_once "helpers/ajax.php";
+require_once "helpers/file.php";
 
 use PauSabe\CBCN\service as s;
 use PauSabe\CBCN\utils as u;
@@ -22,6 +23,14 @@ function save(){
         $place_data["id"] = s\PlaceService::create($place_data["address"], $place_data);
 
     $safe_post["place_id"] = $place_data["id"];
+
+    if(isset($_FILES["image"])){
+        $res = upload_image_input($_FILES["image"]["tmp_name"]);
+        if($res){
+            $safe_post["image_full"] = $res["image_full"];
+            $safe_post["image_low"] = $res["image_low"];
+        }
+    }
 
     isset($safe_post["id"]) && is_numeric($id = $safe_post["id"]) ?
         s\EventService::update($id, $safe_post["name"], $safe_post->getOriginal()) :

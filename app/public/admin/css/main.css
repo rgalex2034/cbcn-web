@@ -29,3 +29,7 @@ body > .content{
 .action-bar{
     margin: 20px 0;
 }
+
+.full-width{
+    width: 100%;
+}
