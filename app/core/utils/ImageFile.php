@@ -23,4 +23,8 @@ class ImageFile{
         return file_put_contents($destination, $imagick->getImageBlob());
     }
 
+    public static function getImageUrl($image_name){
+        return "/static/imgs/".$image_name;
+    }
+
 }

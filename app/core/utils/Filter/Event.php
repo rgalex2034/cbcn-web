@@ -14,6 +14,7 @@ class Event implements u\Filter{
         $data = $data->jsonSerialize();
         $time = strtotime($data["date"]);
         $end_time = strtotime($data["date_end"]);
+        $protocol = isset($_SERVER["HTTPS"]) ? "https://" : "http://";
         return array(
             "id" => $data["id"],
             "title" => $data["name"],
@@ -36,8 +37,8 @@ class Event implements u\Filter{
                 )
             ),
             "image" => array(
-                "url_real" => $data["image_full"],
-                "url_thumbnail" => $data["image_low"],
+                "url_real" => $protocol.$_SERVER["SERVER_NAME"].":".$_SERVER["SERVER_PORT"].u\ImageFile::getImageUrl($data["image_full"]),
+                "url_thumbnail" => $protocol.$_SERVER["SERVER_NAME"].":".$_SERVER["SERVER_PORT"].u\ImageFile::getImageUrl($data["image_low"]),
             ),
             "price" => $data["price"],
             "location" => !$place ? null : array(

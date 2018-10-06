@@ -3,10 +3,6 @@ require_once __DIR__."/../core.php";
 
 use PauSabe\CBCN\utils as u;
 
-function get_image_url($image_name){
-    return "/static/imgs/".$image_name;
-}
-
 function upload_image_input($tmp_name){
     $image_dir = CBCN_PUBLIC_ROOT."/static/imgs";
     $file_name = date("Ymdhi")."_".uniqid();

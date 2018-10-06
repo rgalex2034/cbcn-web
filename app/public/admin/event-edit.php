@@ -1,9 +1,9 @@
 <?php
 require_once "core.php";
 require_once "helpers/html.php";
-require_once "helpers/file.php";
 use PauSabe\CBCN\model\classes as c;
 use PauSabe\CBCN\service as s;
+use PauSabe\CBCN\utils as u;
 
 $id = isset($_GET["id"]) ? $_GET["id"] : null;
 
@@ -88,7 +88,7 @@ $all_groups = s\GroupService::getAll();
                     <input type="hidden" name="image_low" value="<?=$event->getImageLow()?>" />
                 </div>
                 <div class="form-group">
-                    <img class="full-width" src="<?=attr(($image = $event->getImageFull()) ? get_image_url($image) : "") ?: ""?>"/>
+                    <img class="full-width" src="<?=attr(($image = $event->getImageFull()) ? u\ImageFile::getImageUrl($image) : "") ?: ""?>"/>
                 </div>
                 <div class="form-group">
                     <label>Grup</label>
