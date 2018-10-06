@@ -62,6 +62,8 @@ class EventDAO extends MysqlDAO{
         $where = MysqlDAO::getWhere(array_keys($filter));
         if($where) $sql .= " $where";
 
+        $sql .= " ORDER BY `date` DESC";
+
         $limit = MysqlDAO::getLimit($page, $qnt);
         if($limit) $sql .= " $limit";
 
