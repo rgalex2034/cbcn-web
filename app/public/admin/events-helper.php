@@ -30,7 +30,7 @@ function save(){
             $safe_post["image_full"] = $res["image_full"];
             $safe_post["image_low"] = $res["image_low"];
         } else if(!is_numeric($safe_post["id"])){
-            return response("Unable to upload images", 500);
+            return response("No se pueden subir las imágenes. Prueba con un menor tamaño.", 500);
         }
     }
 
