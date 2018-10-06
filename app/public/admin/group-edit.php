@@ -21,7 +21,7 @@ $place = $group->getPlace() ?: new c\Place(null);
         <?php require CBCN_PRIVATE_ROOT."/templates/top.php";?>
         <div class="content">
             <h2>Edició <?=($name = $group->getName()) ? "- ".html($name) : ""?></h2>
-            <form class="col-lg-6" action="groups-helper.php?action=save" method="POST" data-toggle="form-ajax">
+            <form name="group-form" class="col-lg-6" action="groups-helper.php?action=save" method="POST" data-toggle="form-ajax">
                 <input type="hidden" name="id" value="<?=$group->getId()?>" />
                 <div class="form-group">
                     <label>Nom</label>
@@ -83,5 +83,13 @@ $place = $group->getPlace() ?: new c\Place(null);
                 </div>
             </form>
         </div>
+        <?php require CBCN_PRIVATE_ROOT."/templates/modal.php";?>
+        <script>
+            $(document.forms["group-form"]).on("ajax:done", function(ev, response){
+                location.href = location.protocol+"//"+location.host+location.pathname+"?id="+response;
+            }).on("ajax:fail", function(ev, jqxhr){
+                modalAlert(jqxhr.responseText, "Error");
+            });
+        </script>
     </body>
 </html>

@@ -20,7 +20,7 @@ function upload_image_input($tmp_name){
 
     $ok = move_uploaded_file($tmp_name, $original_file = $image_dir."/".$file_name);
     if(!$ok){
-        error_log(__FILE__.": Unable to upload temporal file $tmp_name");
+        error_log(__FILE__.": Unable to upload temporal file $tmp_name to $original_file");
         return false;
     }
 
@@ -29,7 +29,7 @@ function upload_image_input($tmp_name){
     if(!$image_file->generateThumbail($image_dir."/".$low_name)) return false;
 
     return array(
-        "image_original" => $original_file,
+        "image_original" => $file_name,
         "image_full" => $full_name,
         "image_low" => $low_name,
     );

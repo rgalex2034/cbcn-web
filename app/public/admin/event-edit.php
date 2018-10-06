@@ -20,12 +20,13 @@ $all_groups = s\GroupService::getAll();
     <head>
         <?php require CBCN_PRIVATE_ROOT."/templates/header.php";?>
         <script src="js/plugins/form-ajax.js"></script>
+        <script src="js/plugins/modal.js"></script>
     </head>
     <body>
         <?php require CBCN_PRIVATE_ROOT."/templates/top.php";?>
         <div class="content">
             <h2>Edició event <?=($name = $group->getName()) ? "- ".html($name) : ""?></h2>
-            <form class="col-lg-6" action="events-helper.php?action=save" method="POST" data-toggle="form-ajax">
+            <form name="event-form" class="col-lg-6" action="events-helper.php?action=save" method="POST" data-toggle="form-ajax">
                 <input type="hidden" name="id" value="<?=$event->getId()?>" />
                 <div class="form-group">
                     <label>Nom</label>
@@ -121,5 +122,13 @@ $all_groups = s\GroupService::getAll();
                 </div>
             </form>
         </div>
+        <?php require CBCN_PRIVATE_ROOT."/templates/modal.php";?>
+        <script>
+            $(document.forms["event-form"]).on("ajax:done", function(ev, response){
+                location.href = location.protocol+"//"+location.host+location.pathname+"?id="+response;
+            }).on("ajax:fail", function(ev, jqxhr){
+                modalAlert(jqxhr.responseText, "Error");
+            });
+        </script>
     </body>
 </html>

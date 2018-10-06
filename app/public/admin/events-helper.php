@@ -29,12 +29,14 @@ function save(){
         if($res){
             $safe_post["image_full"] = $res["image_full"];
             $safe_post["image_low"] = $res["image_low"];
+        } else if(!is_numeric($safe_post["id"])){
+            return response("Unable to upload images", 500);
         }
     }
 
     isset($safe_post["id"]) && is_numeric($id = $safe_post["id"]) ?
         s\EventService::update($id, $safe_post["name"], $safe_post->getOriginal()) :
-        s\EventService::create($safe_post["name"], $safe_post->getOriginal());
+        ($id = s\EventService::create($safe_post["name"], $safe_post->getOriginal()) );
 
-    response("Done!");
+    response($id);
 }

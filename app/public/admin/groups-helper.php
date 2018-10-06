@@ -25,7 +25,7 @@ function save(){
 
     isset($safe_post["id"]) && is_numeric($id = $safe_post["id"]) ?
         s\GroupService::update($id, $safe_post["name"], $safe_post->getOriginal()) :
-        s\GroupService::create($safe_post["name"], $safe_post->getOriginal());
+        ($id = s\GroupService::create($safe_post["name"], $safe_post->getOriginal()) );
 
-    response("Done!");
+    response($id);
 }

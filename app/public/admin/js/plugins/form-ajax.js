@@ -8,7 +8,7 @@
  *
  * Events applied on form element:
  *
- *  - ajax:before(jqxhr, params)
+ *  - ajax:before(params)
  *      Executes before the ajax request executes.
  *      Recieve the jqxhr object and the params used to create it.
  *
@@ -33,7 +33,7 @@
 
         var url = $form.attr("action");
         //Default to current page if no action provided
-        if(!url) url = location.protocol+"//"+location.hostname+":"+location.port+location.pathname;
+        if(!url) url = location.protocol+"//"+location.host+location.pathname;
         var method = $form.attr("method");
         var data = !has_files ? $form.serialize() : new FormData(this);
 
@@ -49,7 +49,7 @@
             params.contentType = false;
         }
 
-        $form.trigger("ajax:before", req, params);
+        $form.trigger("ajax:before", params);
 
         var req = $.ajax(params).then(function(response, textStatus, jqxhr){
             $form.trigger("ajax:done", response, textStatus, jqxhr);
