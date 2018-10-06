@@ -39,9 +39,7 @@ class EventDAO extends MysqlDAO{
     }
 
     protected function onRead($id, $conn){
-        $sql = "SELECT id, name, subtitle, description, `date`, date_end, place,
-                       price, url, rec_age, organizer, contact_email, contact_phone,
-                       image_full, image_low, `group`
+        $sql = "SELECT ".implode(", ", $this->getEscapedFields())."
                 FROM event
                 WHERE id = :id";
 
@@ -58,9 +56,7 @@ class EventDAO extends MysqlDAO{
 
     protected function onReadAll($conn, $page, $qnt, $filter){
         if(!is_array($filter)) $filter = [];
-        $sql = "SELECT id, name, subtitle, description, `date`, date_end, place,
-            price, url, rec_age, organizer, contact_email, contact_phone, image_full,
-            image_low, `group`
+        $sql = "SELECT ".implode(", ", $this->getEscapedFields())."
                 FROM event";
 
         $where = MysqlDAO::getWhere(array_keys($filter));
@@ -82,13 +78,7 @@ class EventDAO extends MysqlDAO{
 
     protected function onUpdate($object, $conn){
         $sql = "UPDATE event
-                SET name = :name, subtitle = :subtitle,
-                    description = :description, `date` = :date,
-                    date_end = :date_end, place = :place, price = :price,
-                    url = :url, rec_age = :rec_age, image_full = :image_full,
-                    image_low = :image_low, organizer = :organizer,
-                    contact_email = :contact_email,
-                    contact_phone = :contact_phone, `group` = :group
+                SET ".$this->getUpdateFieldsStr()."
                 WHERE id = :id";
 
         $stmnt = $conn->prepare($sql);
@@ -135,6 +125,12 @@ class EventDAO extends MysqlDAO{
         $event->setGroupId($data["group"]);
         $event->setPlaceid($data["place"]);
         return $event;
+    }
+
+    protected function getFields(){
+        return array("id", "name", "subtitle", "description", "date", "date_end", "place",
+            "price", "url", "rec_age", "organizer", "contact_email", "contact_phone", "image_full",
+            "image_low", "group");
     }
 
 }

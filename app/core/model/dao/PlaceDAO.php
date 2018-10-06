@@ -21,7 +21,7 @@ class PlaceDAO extends MysqlDAO{
     }
 
     protected function onRead($id, $conn){
-        $sql = "SELECT id, address, short_address, latitude, longitude
+        $sql = "SELECT ".implode(", ", $this->getEscapedFields())."
                 FROM place
                 WHERE id = :id";
 
@@ -37,7 +37,7 @@ class PlaceDAO extends MysqlDAO{
     }
 
     protected function onReadAll($conn, $page, $qnt, $filter){
-        $sql = "SELECT id, address, short_address, latitude, longitude
+        $sql = "SELECT ".implode(", ", $this->getEscapedFields())."
                 FROM place";
 
         $limit = MysqlDAO::getLimit($page, $qnt);
@@ -55,8 +55,7 @@ class PlaceDAO extends MysqlDAO{
 
     protected function onUpdate($object, $conn){
         $sql = "UPDATE place
-                SET address = :address, short_address = :short_address,
-                    latitude = :latitude, longitude = :longitude
+                SET ".$this->getUpdateFieldsStr()."
                 WHERE id = :id";
 
         $stmnt = $conn->prepare($sql);
@@ -83,6 +82,10 @@ class PlaceDAO extends MysqlDAO{
         $place = new Place($data["address"], $data["short_address"], $data["latitude"], $data["longitude"]);
         $place->setId($data["id"]);
         return $place;
+    }
+
+    protected function getFields(){
+        return array("id", "address", "short_address", "latitude", "longitude");
     }
 
 }

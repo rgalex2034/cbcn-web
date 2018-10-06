@@ -32,8 +32,7 @@ class GroupDAO extends MysqlDAO{
     }
 
     protected function onRead($id, $conn){
-        $sql = "SELECT id, name, place, description, url_info, url_image,
-                    responsible, contact_email, contact_phone, district
+        $sql = "SELECT ".implode(", ", $this->getEscapedFields())."
                 FROM `group`
                 WHERE id = :id";
 
@@ -49,8 +48,7 @@ class GroupDAO extends MysqlDAO{
     }
 
     protected function onReadAll($conn, $page, $qnt, $filter){
-        $sql = "SELECT id, name, place, description, url_info, url_image,
-                    responsible, contact_email, contact_phone, district
+        $sql = "SELECT ".implode(", ", $this->getEscapedFields())."
                 FROM `group`";
 
         $limit = MysqlDAO::getLimit($page, $qnt);
@@ -68,10 +66,7 @@ class GroupDAO extends MysqlDAO{
 
     protected function onUpdate($object, $conn){
         $sql = "UPDATE `group`
-                SET name = :name, place = :place, description = :description,
-                    url_info = :url_info, url_image = :url_image,
-                    responsible = :responsible, contact_email = :contact_email,
-                    contact_phone = :contact_phone, district = :district
+                SET ".$this->getUpdateFieldsStr()."
                 WHERE id = :id";
 
         $stmnt = $conn->prepare($sql);
@@ -108,6 +103,11 @@ class GroupDAO extends MysqlDAO{
         $group->setId($data["id"]);
         $group->setPlaceId($data["place"]);
         return $group;
+    }
+
+    protected function getFields(){
+        return array("id", "name", "place", "description", "url_info", "url_image",
+                    "responsible", "contact_email", "contact_phone", "district");
     }
 
 }

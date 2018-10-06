@@ -34,6 +34,10 @@ abstract class MysqlDAO extends AbstractDAO{
         return false;
     }
 
+    public static function escapeField($field){
+        return "`".str_replace("`", "\`", $field)."`";
+    }
+
     public function getWhere($fields){
         if(!is_array($fields) || count($fields) == 0) return false;
         $where = "WHERE 1=1 AND";
@@ -55,5 +59,31 @@ abstract class MysqlDAO extends AbstractDAO{
         }
         return $limit;
     }
+
+    protected function getEscapedFields(){
+        return array_map(function($field){
+            return self::escapeField($field);
+        }, $this->getFields());
+    }
+
+    protected function getUpdateFieldsStr(){
+        $id_fields = $this->getIdFields();
+        $fields = [];
+        foreach($this->getFields() as $field){
+            if(in_array($field, $id_fields)) continue;
+            $fields[] = self::escapeField($field)." = :$field";
+        }
+        return implode(", ", $fields);
+    }
+
+    /**
+     * Returns the default id fields.
+     * Must be overrided if id field changes on an entity.
+     */
+    protected function getIdFields(){
+        return ["id"];
+    }
+
+    protected abstract function getFields();
 
 }
