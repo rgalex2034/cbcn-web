@@ -26,7 +26,7 @@ function upload_image_input($tmp_name){
 
     $image_file = new u\ImageFile($original_file);
     if(!$image_file->generateFullImage($image_dir."/".$full_name)) return false;
-    if(!$image_file->generateThumbail($image_dir."/".$low_name)) return false;
+    if(!$image_file->generateThumbnail($image_dir."/".$low_name)) return false;
 
     return array(
         "image_original" => $file_name,

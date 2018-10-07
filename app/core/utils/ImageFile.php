@@ -17,7 +17,7 @@ class ImageFile{
         return file_put_contents($destination, $imagick->getImageBlob());
     }
 
-    public function generateThumbail($destination){
+    public function generateThumbnail($destination){
         $imagick = new \Imagick($this->file);
         if(!$imagick->resizeImage(20, 0, \Imagick::FILTER_POINT, 1)) return false;
         return file_put_contents($destination, $imagick->getImageBlob());
