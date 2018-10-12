@@ -7,7 +7,7 @@ use PauSabe\CBCN\model\dao\proxies;
 class EventDAO extends MysqlDAO{
 
     protected function onCreate($event, $conn){
-        $sql = "INSERT INTO event(name, subtitle, description, `date`, date_end,
+        $sql = "INSERT INTO event(name, subtitle, description, highlighted, `date`, date_end,
             place, price, url, rec_age, image_full, image_low, organizer,
             contact_email, contact_phone, `group`)
             VALUES(:name, :subtitle, :description, :date, :date_end,
@@ -18,6 +18,7 @@ class EventDAO extends MysqlDAO{
         $stmnt->bindValue(":name", $event->getName());
         $stmnt->bindValue(":subtitle", $event->getSubtitle());
         $stmnt->bindValue(":description", $event->getDescription());
+        $stmnt->bindValue(":highlighted", $event->isHighlighted());
         $stmnt->bindValue(":date", $event->getDate());
         $stmnt->bindValue(":date_end", $event->getDateEnd());
         $place = $event->getPlace();
@@ -62,7 +63,7 @@ class EventDAO extends MysqlDAO{
         $where = MysqlDAO::getWhere(array_keys($filter));
         if($where) $sql .= " $where";
 
-        $sql .= " ORDER BY `date` DESC";
+        $sql .= " ORDER BY highlighted = 0, `date` DESC";//Highligted first, as we do a DESC we check for highligted 0
 
         $limit = MysqlDAO::getLimit($page, $qnt);
         if($limit) $sql .= " $limit";
@@ -87,6 +88,7 @@ class EventDAO extends MysqlDAO{
         $stmnt->bindValue(":name", $object->getName());
         $stmnt->bindValue(":subtitle", $object->getSubtitle());
         $stmnt->bindValue(":description", $object->getDescription());
+        $stmnt->bindValue(":highlighted", $object->isHighlighted(), \PDO::PARAM_INT);
         $stmnt->bindValue(":date", $object->getDate());
         $stmnt->bindValue(":date_end", $object->getDateEnd());
         $place = $object->getPlace();
@@ -122,6 +124,7 @@ class EventDAO extends MysqlDAO{
             $data["price"], $data["url"], $data["image_full"],
             $data["image_low"], $data["organizer"], $data["contact_email"],
             $data["contact_phone"], null);
+        $event->setHighlighted($data["highlighted"]);
         $event->setRecommendedAge($data["rec_age"]);
         $event->setId($data["id"]);
         $event->setGroupId($data["group"]);
@@ -130,7 +133,7 @@ class EventDAO extends MysqlDAO{
     }
 
     protected function getFields(){
-        return array("id", "name", "subtitle", "description", "date", "date_end", "place",
+        return array("id", "name", "subtitle", "description", "highlighted", "date", "date_end", "place",
             "price", "url", "rec_age", "organizer", "contact_email", "contact_phone", "image_full",
             "image_low", "group");
     }

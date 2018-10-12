@@ -24,7 +24,7 @@ function save(){
 
     $safe_post["place_id"] = $place_data["id"];
 
-    if(isset($_FILES["image"])){
+    if(isset($_FILES["image"]) && $_FILES["image"]["tmp_name"]){
         $res = upload_image_input($_FILES["image"]["tmp_name"]);
         if($res){
             $safe_post["image_full"] = $res["image_full"];

@@ -25,7 +25,7 @@ $all_groups = s\GroupService::getAll();
     <body>
         <?php require CBCN_PRIVATE_ROOT."/templates/top.php";?>
         <div class="content">
-            <h2>Edició event <?=($name = $group->getName()) ? "- ".html($name) : ""?></h2>
+            <h2>Edició event <?=($name = $event->getName()) ? "- ".html($name) : ""?></h2>
             <form name="event-form" class="col-lg-6" action="events-helper.php?action=save" method="POST" data-toggle="form-ajax">
                 <input type="hidden" name="id" value="<?=$event->getId()?>" />
                 <div class="form-group">
@@ -39,6 +39,10 @@ $all_groups = s\GroupService::getAll();
                 <div class="form-group">
                     <label>Descripció</label>
                     <textarea name="description" class="form-control"><?=html($event->getDescription()) ?: ""?></textarea>
+                </div>
+                <div class="form-group">
+                    <label>Destacat</label>
+                    <input type="checkbox" name="highlighted" <?=$event->isHighlighted() ? "checked" : ""?>/>
                 </div>
                 <div class="form-group">
                     <label>Data</label>

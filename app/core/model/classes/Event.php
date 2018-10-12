@@ -12,6 +12,7 @@ class Event implements JSON\JsonSerializable{
     private $name;
     private $subtitle;
     private $description;
+    private $highlighted = false;
     private $date;
     private $date_end;
     protected $place;
@@ -78,6 +79,14 @@ class Event implements JSON\JsonSerializable{
 
     public function setDescription($description){
         $this->description = strval($description);
+    }
+
+    public function isHighlighted(){
+        return $this->highlighted;
+    }
+
+    public function setHighlighted($highlighted = true){
+        $this->highlighted = (bool) $highlighted;
     }
 
     public function getDate(){
@@ -186,6 +195,7 @@ class Event implements JSON\JsonSerializable{
             "name" => $this->getName(),
             "subtitle" => $this->getSubtitle(),
             "description" => $this->getDescription(),
+            "highlighted" => $this->isHighlighted(),
             "date" => $this->getDate(),
             "date_end" => $this->getDateEnd(),
             "place" => $place ? $place->getId() : null,

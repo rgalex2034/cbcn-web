@@ -31,6 +31,7 @@ CREATE TABLE event(
     name VARCHAR(100) NOT NULL,
     subtitle VARCHAR(200),
     description VARCHAR(500),
+    highlighted TINYINT(1) DEFAULT 0,
     `date` DATETIME,
     date_end DATETIME,
     place INT,

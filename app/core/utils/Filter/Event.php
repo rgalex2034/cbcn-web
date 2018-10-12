@@ -20,6 +20,7 @@ class Event implements u\Filter{
             "title" => $data["name"],
             "subtitle" => $data["subtitle"],
             "description" => $data["description"],
+            "highlighted" => $data["highlighted"],
             "duration" => array(
                 "start" => array(
                         "day" => date("d", $time),
