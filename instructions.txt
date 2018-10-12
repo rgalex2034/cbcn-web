@@ -8,3 +8,18 @@
 
 
 - http://localhost:81/api/event?page=1&qnt=10
+
+Per a pujada:
+Copiem a l'arrel les carpetes:
+ - core -> cbcn-core
+ - lib -> cbcn-lib
+ - private -> cbcn-private
+
+Copiem a la carpeta del domini la carpeta:
+ - public -> delego.cat
+
+Substituim el contingut de:
+ - public/admin/.htacces:
+    Cambiem absoluta de l'arxiu ".htpasswd" per l'equivalent del servidor
+ - public/core.php
+    Cambiem les rutes relatives per a corresponguin al número de subcarpetes del servidor
