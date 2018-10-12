@@ -10,7 +10,7 @@ class EventDAO extends MysqlDAO{
         $sql = "INSERT INTO event(name, subtitle, description, highlighted, `date`, date_end,
             place, price, url, rec_age, image_full, image_low, organizer,
             contact_email, contact_phone, `group`)
-            VALUES(:name, :subtitle, :description, :date, :date_end,
+            VALUES(:name, :subtitle, :description, :highlighted, :date, :date_end,
             :place, :price, :url, :rec_age, :image_full, :image_low, :organizer,
             :contact_email, :contact_phone, :group)";
 
