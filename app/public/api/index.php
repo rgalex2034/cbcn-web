@@ -1,6 +1,6 @@
 <?php
-require_once("../../cbcn-core/autoloader.php");
-require_once("../../cbcn-lib/limonade.php");
+require_once("../core.php");
+require_once(CBCN_LIB_ROOT."/limonade.php");
 
 use PauSabe\CBCN\service as s;
 use PauSabe\CBCN\utils as u;
