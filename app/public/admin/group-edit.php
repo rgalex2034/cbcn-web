@@ -16,6 +16,9 @@ $place = $group->getPlace() ?: new c\Place(null);
     <head>
         <?php require CBCN_PRIVATE_ROOT."/templates/header.php";?>
         <script src="js/plugins/form-ajax.js"></script>
+        <script src="js/plugins/modal.js"></script>
+        <script src="js/utils.js"></script>
+        <script src="js/group-edit.js"></script>
     </head>
     <body>
         <?php require CBCN_PRIVATE_ROOT."/templates/top.php";?>
@@ -85,11 +88,6 @@ $place = $group->getPlace() ?: new c\Place(null);
         </div>
         <?php require CBCN_PRIVATE_ROOT."/templates/modal.php";?>
         <script>
-            $(document.forms["group-form"]).on("ajax:done", function(ev, response){
-                location.href = location.protocol+"//"+location.host+location.pathname+"?id="+response;
-            }).on("ajax:fail", function(ev, jqxhr){
-                modalAlert(jqxhr.responseText, "Error");
-            });
         </script>
     </body>
 </html>
