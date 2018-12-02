@@ -1,5 +1,6 @@
 *.swp
 *.swo
+docker-compose.override.yml
 app/core/config.ini
 app/private/.htpasswd
 data/mysql/*
