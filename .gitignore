@@ -1,4 +1,6 @@
 *.swp
 *.swo
 app/core/config.ini
+app/private/.htpasswd
+data/mysql/*
 .DS_Store
