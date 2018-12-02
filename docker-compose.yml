@@ -17,5 +17,6 @@ services:
             MYSQL_ROOT_PASSWORD: "root"
         volumes:
             - ./app/scripts:/scripts
+            - ./data/mysql:/var/lib/mysql
 volumes:
     web_static:
