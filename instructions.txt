@@ -23,3 +23,8 @@ Substituim el contingut de:
     Cambiem absoluta de l'arxiu ".htpasswd" per l'equivalent del servidor
  - public/core.php
     Cambiem les rutes relatives per a corresponguin al número de subcarpetes del servidor
+
+Create or subsitute .htpasswd
+ - Install apache2-utils
+ - To create a file, use "htpasswd -c <path-to-file> <username>"
+ - To update a password, use "htpasswd <path-to-file> <username>"
