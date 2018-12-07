@@ -18,7 +18,7 @@ class EventDAO extends MysqlDAO{
         $stmnt->bindValue(":name", $event->getName());
         $stmnt->bindValue(":subtitle", $event->getSubtitle());
         $stmnt->bindValue(":description", $event->getDescription());
-        $stmnt->bindValue(":highlighted", $event->isHighlighted());
+        $stmnt->bindValue(":highlighted", $event->isHighlighted() ? 1 : 0);
         $stmnt->bindValue(":date", $event->getDate());
         $stmnt->bindValue(":date_end", $event->getDateEnd());
         $place = $event->getPlace();
