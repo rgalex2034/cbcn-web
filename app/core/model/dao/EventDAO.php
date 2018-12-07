@@ -60,7 +60,7 @@ class EventDAO extends MysqlDAO{
         $sql = "SELECT ".implode(", ", $this->getEscapedFields())."
                 FROM event";
 
-        $where = MysqlDAO::getWhere(array_keys($filter));
+        $where = MysqlDAO::getWhere($filter);
         if($where) $sql .= " $where";
 
         $sql .= " ORDER BY highlighted = 0, `date` DESC";//Highligted first, as we do a DESC we check for highligted 0

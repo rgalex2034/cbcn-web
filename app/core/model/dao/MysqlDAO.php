@@ -38,26 +38,59 @@ abstract class MysqlDAO extends AbstractDAO{
         return "`".str_replace("`", "\`", $field)."`";
     }
 
-    public function getWhere($fields){
-        if(!is_array($fields) || count($fields) == 0) return false;
-        $where = "WHERE 1=1 AND";
+    public function getWhere($filters){
+        if(!is_array($filters) || count($filters) == 0) return false;
+        $where = "WHERE 1=1 ";
         $valid_fields = $this->getFields();
-
         $ok = false;
-        foreach($fields as $field){
-            if(!in_array($field, $valid_fields)) continue;
-            if(!$ok) $ok = true; //Once one field is valid, set it as okey.
-            $where .= " $field = :$field";
+
+        $n = 0;
+        foreach($filters as $filter){
+            $col = $filter["col"];
+            $type = $filter["type"];
+            $values = $filter["value"];
+
+            if(count($values) == 0) continue;
+            if(!in_array($col, $valid_fields)) continue;
+            if(!$ok) $ok = true;
+
+            $where .= " AND ";
+            if($type == "range"){
+                $where .= " $col BETWEEN :{$col}_$n AND :{$col}_".(++$n);
+            }else{
+                if(count($values) == 1){
+                    $where .= " $col = :{$col}_$n";
+                }else{
+                    $where .= " $col IN(";
+                    foreach($values as $value){
+                        $where .= ":{$col}_".($n++).",";
+                    }
+                    $where = substr($where, 0, strlen($where)-1);
+                    $where .= ")";
+                    $n--;
+                }
+            }
+            $n++;
         }
 
         return $ok ? $where : false;
     }
 
-    public function setWhereFields(\PDOStatement $stmnt, $map){
+    public function setWhereFields(\PDOStatement $stmnt, $filters){
         $valid_fields = $this->getFields();
-        foreach($map as $field => $value){
-            if(!in_array($field, $valid_fields)) continue;
-            $stmnt->bindValue($field, $value);
+        $n = 0;
+        foreach($filters as $filter){
+            $col = $filter["col"];
+            $type = $filter["type"];
+            $values = $filter["value"];
+            if(!in_array($col, $valid_fields)) continue;
+            $count = 0;
+            foreach($values as $value){
+                if($count == 2 && $type == "range") break;
+                $stmnt->bindValue("{$col}_$n", $value);
+                $n++;
+                $count++;
+            }
         }
     }
 
