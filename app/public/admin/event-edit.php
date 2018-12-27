@@ -1,6 +1,7 @@
 <?php
 require_once "core.php";
 require_once "helpers/html.php";
+require_once "helpers/utils.php";
 use PauSabe\CBCN\model\classes as c;
 use PauSabe\CBCN\service as s;
 use PauSabe\CBCN\utils as u;
@@ -50,11 +51,11 @@ $all_groups = s\GroupService::getAll();
                 </div>
                 <div class="form-group">
                     <label>Data</label>
-                    <input required type="text" name="date" class="form-control" data-toggle="datetimepicker" data-format="Y-m-d H:i" value="<?=attr(date("Y-m-d H:i", strtotime($event->getDate()))) ?: ""?>" />
+                    <input required type="text" name="date" class="form-control" data-toggle="datetimepicker" value="<?=attr(format_str_date($event->getDate())) ?: ""?>" />
                 </div>
                 <div class="form-group">
                     <label>Data fi</label>
-                    <input type="text" name="date_end" class="form-control" value="<?=attr($event->getDateEnd()) ?: ""?>" />
+                    <input type="text" name="date_end" class="form-control" data-toggle="datetimepicker" value="<?=attr(format_str_date($event->getDateEnd())) ?: ""?>" />
                 </div>
                 <div class="form-row">
                     <input type="hidden" name="place_id" value="<?=attr($place->getId())?>" />

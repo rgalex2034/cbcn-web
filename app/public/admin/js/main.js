@@ -4,7 +4,9 @@ document.addEventListener("DOMContentLoaded", function(){
     $.datetimepicker.setLocale("es");
     $("[data-toggle=datetimepicker]").each(function(){
         var $this = $(this);
-        var defaults = {};
+        var defaults = {
+            format: "Y-m-d H:i"
+        };
 
         /* Set up time options
          * Creates an array of values with format HH:MM
