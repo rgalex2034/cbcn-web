@@ -50,7 +50,7 @@ $all_groups = s\GroupService::getAll();
                 </div>
                 <div class="form-group">
                     <label>Data</label>
-                    <input required type="text" name="date" class="form-control" data-toggle="datetimepicker" data-format="Y-m-d H:i:s" value="<?=attr($event->getDate()) ?: ""?>" />
+                    <input required type="text" name="date" class="form-control" data-toggle="datetimepicker" data-format="Y-m-d H:i" value="<?=attr(date("Y-m-d H:i", strtotime($event->getDate()))) ?: ""?>" />
                 </div>
                 <div class="form-group">
                     <label>Data fi</label>
