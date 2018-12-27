@@ -45,6 +45,7 @@ abstract class MysqlDAO extends AbstractDAO{
         $ok = false;
 
         $n = 0;
+        $filter_strings = [];
         foreach($filters as $filter){
             $col = $filter["col"];
             $type = $filter["type"];
@@ -54,23 +55,30 @@ abstract class MysqlDAO extends AbstractDAO{
             if(!in_array($col, $valid_fields)) continue;
             if(!$ok) $ok = true;
 
-            $where .= " AND ";
+            $filter_str = null;
             if($type == "range"){
-                $where .= " $col BETWEEN :{$col}_$n AND :{$col}_".(++$n);
+                $filter_str = " $col BETWEEN :{$col}_$n AND :{$col}_".(++$n);
             }else{
                 if(count($values) == 1){
-                    $where .= " $col = :{$col}_$n";
+                    $filter_str = " $col = :{$col}_$n";
                 }else{
-                    $where .= " $col IN(";
+                    $filter_str = " $col IN(";
                     foreach($values as $value){
-                        $where .= ":{$col}_".($n++).",";
+                        $filter_str .= ":{$col}_".($n++).",";
                     }
-                    $where = substr($where, 0, strlen($where)-1);
-                    $where .= ")";
+                    $filter_str = substr($where, 0, strlen($where)-1);
+                    $filter_str .= ")";
                     $n--;
                 }
             }
+            if($filter_str) $filter_strings[$col][] = $filter_str;
             $n++;
+        }
+
+        foreach($filter_strings as $col => $values){
+            if(empty($values)) continue;
+            $where .= " AND ";
+            $where .= "(".implode(" OR ", $values).")";
         }
 
         return $ok ? $where : false;
