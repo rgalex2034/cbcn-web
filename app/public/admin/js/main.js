@@ -1,11 +1,12 @@
 document.addEventListener("DOMContentLoaded", function(){
 
     //Datetime picker initializer
-    $.datetimepicker.setLocale("es");
+    $.datetimepicker.setLocale("ca");
     $("[data-toggle=datetimepicker]").each(function(){
         var $this = $(this);
         var defaults = {
-            format: "Y-m-d H:i"
+            format: "Y-m-d H:i",
+            dayOfWeekStart: 1
         };
 
         /* Set up time options

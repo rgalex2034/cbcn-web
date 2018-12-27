@@ -52,11 +52,11 @@ $all_groups = s\GroupService::getAll();
                 </div>
                 <div class="form-group">
                     <label data-required>Data</label>
-                    <input required type="text" name="date" placeholder="aaaa/mm/dd mm:ss" class="form-control" data-toggle="datetimepicker" value="<?=attr(format_str_date($event->getDate())) ?: ""?>" />
+                    <input required type="text" name="date" placeholder="aaaa-mm-dd mm:ss" class="form-control" data-toggle="datetimepicker" value="<?=attr(format_str_date($event->getDate())) ?: ""?>" />
                 </div>
                 <div class="form-group">
                     <label>Data fi</label>
-                    <input type="text" name="date_end" placeholder="aaaa/mm/dd mm:ss" class="form-control" data-toggle="datetimepicker" value="<?=attr(format_str_date($event->getDateEnd())) ?: ""?>" />
+                    <input type="text" name="date_end" placeholder="aaaa-mm-dd mm:ss" class="form-control" data-toggle="datetimepicker" value="<?=attr(format_str_date($event->getDateEnd())) ?: ""?>" />
                 </div>
                 <div class="form-row">
                     <input type="hidden" name="place_id" value="<?=attr($place->getId())?>" />
