@@ -5,6 +5,5 @@
     <ul>
         <li><a href="events.php">Events</a></li>
         <li><a href="groups.php">Grups</a></li>
-        <li><a href="places.php">Llocs</a></li>
     </ul>
 </div>

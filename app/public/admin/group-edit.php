@@ -23,11 +23,12 @@ $place = $group->getPlace() ?: new c\Place(null);
     <body>
         <?php require CBCN_PRIVATE_ROOT."/templates/top.php";?>
         <div class="content">
-            <h2>Edició <?=($name = $group->getName()) ? "- ".html($name) : ""?></h2>
+            <h2>Edició grup <?=($name = $group->getName()) ? "- ".html($name) : ""?></h2>
+            <p class="text-muted">Els camps marcats amb un asterisc (*) són obligatoris</p>
             <form name="group-form" class="col-lg-6" action="groups-helper.php?action=save" method="POST" data-toggle="form-ajax">
                 <input type="hidden" name="id" value="<?=$group->getId()?>" />
                 <div class="form-group">
-                    <label>Nom</label>
+                    <label data-required>Nom</label>
                     <input required type="text" name="name" class="form-control" value="<?=attr($group->getName()) ?: ""?>"/>
                 </div>
                 <div class="form-group">
@@ -58,7 +59,8 @@ $place = $group->getPlace() ?: new c\Place(null);
                 </div>
                 <div class="form-group">
                     <label>URL informativa</label>
-                    <input type="text" name="url_info" class="form-control" value="<?=attr($group->getUrlInfo()) ?: ""?>"/>
+                    <input type="text" name="url_info" title="L'URL ha de començar amb 'http://' o 'https://'"
+                        pattern="^https?://.+" placeholder="http://..." class="form-control" value="<?=attr($group->getUrlInfo()) ?: ""?>"/>
                 </div>
                 <div class="form-group">
                     <label>URL de l'imatge</label>

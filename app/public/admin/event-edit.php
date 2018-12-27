@@ -31,10 +31,11 @@ $all_groups = s\GroupService::getAll();
         <?php require CBCN_PRIVATE_ROOT."/templates/top.php";?>
         <div class="content">
             <h2>Edició event <?=($name = $event->getName()) ? "- ".html($name) : ""?></h2>
+            <p class="text-muted">Els camps marcats amb un asterisc (*) són obligatoris</p>
             <form name="event-form" class="col-lg-6" action="events-helper.php?action=save" method="POST" data-toggle="form-ajax">
                 <input type="hidden" name="id" value="<?=$event->getId()?>" />
                 <div class="form-group">
-                    <label>Nom</label>
+                    <label data-required>Nom</label>
                     <input required type="text" name="name" class="form-control" value="<?=attr($event->getName()) ?: ""?>"/>
                 </div>
                 <div class="form-group">
@@ -50,12 +51,12 @@ $all_groups = s\GroupService::getAll();
                     <input type="checkbox" name="highlighted" <?=$event->isHighlighted() ? "checked" : ""?>/>
                 </div>
                 <div class="form-group">
-                    <label>Data</label>
-                    <input required type="text" name="date" class="form-control" data-toggle="datetimepicker" value="<?=attr(format_str_date($event->getDate())) ?: ""?>" />
+                    <label data-required>Data</label>
+                    <input required type="text" name="date" placeholder="aaaa/mm/dd mm:ss" class="form-control" data-toggle="datetimepicker" value="<?=attr(format_str_date($event->getDate())) ?: ""?>" />
                 </div>
                 <div class="form-group">
                     <label>Data fi</label>
-                    <input type="text" name="date_end" class="form-control" data-toggle="datetimepicker" value="<?=attr(format_str_date($event->getDateEnd())) ?: ""?>" />
+                    <input type="text" name="date_end" placeholder="aaaa/mm/dd mm:ss" class="form-control" data-toggle="datetimepicker" value="<?=attr(format_str_date($event->getDateEnd())) ?: ""?>" />
                 </div>
                 <div class="form-row">
                     <input type="hidden" name="place_id" value="<?=attr($place->getId())?>" />
@@ -85,14 +86,15 @@ $all_groups = s\GroupService::getAll();
                 </div>
                 <div class="form-group">
                     <label>URL</label>
-                    <input type="text" name="url" class="form-control" value="<?=attr($event->getUrl()) ?: ""?>"/>
+                    <input type="text" name="url" title="L'URL ha de començar amb 'http://' o 'https://'"
+                        pattern="^https?://.+" placeholder="http://..." class="form-control" value="<?=attr($event->getUrl()) ?: ""?>"/>
                 </div>
                 <div class="form-group">
                     <label>Edat recomanada</label>
                     <input type="number" name="rec_age" class="form-control" value="<?=attr($event->getRecommendedAge()) ?: ""?>"/>
                 </div>
                 <div class="form-group">
-                    <label>Imatge</label>
+                    <label data-required>Imatge</label>
                     <input <?=$id ? "" : "required"?> type="file" accept="image/*" name="image" />
                     <input type="hidden" name="image_full" value="<?=$event->getImageFull()?>" />
                     <input type="hidden" name="image_low" value="<?=$event->getImageLow()?>" />
@@ -119,11 +121,14 @@ $all_groups = s\GroupService::getAll();
                 </div>
                 <div class="form-group">
                     <label>Correu de contacte</label>
-                    <input type="text" name="contact_email" class="form-control" value="<?=attr($event->getContactEmail()) ?: ""?>"/>
+                    <input type="text" name="contact_email"
+                        title="El correu electrònic ha de contenir només un @ que separi el nom del correu i el su proveïdor"
+                        pattern="[^@]+@[^@]+" placeholder="exemple@email.com" class="form-control" value="<?=attr($event->getContactEmail()) ?: ""?>"/>
                 </div>
                 <div class="form-group">
                     <label>Telèfon de contacte</label>
-                    <input type="text" name="contact_phone" class="form-control" value="<?=attr($event->getContactPhone()) ?: ""?>"/>
+                    <input type="text" title="En format numèric, amb prefix internacional opcional"
+                        pattern="\+?[\d ]+" name="contact_phone" class="form-control" value="<?=attr($event->getContactPhone()) ?: ""?>"/>
                 </div>
                 <div class="action-bar">
                     <button type="submit" class="btn btn-success">Guardar</button>
