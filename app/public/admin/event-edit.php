@@ -19,6 +19,8 @@ $all_groups = s\GroupService::getAll();
 <html>
     <head>
         <?php require CBCN_PRIVATE_ROOT."/templates/header.php";?>
+        <link rel="stylesheet" href="css/jquery.datetimepicker.min.css"></script>
+        <script src="js/plugins/jquery.datetimepicker.full.min.js"></script>
         <script src="js/plugins/form-ajax.js"></script>
         <script src="js/plugins/modal.js"></script>
         <script src="js/utils.js"></script>
@@ -48,7 +50,7 @@ $all_groups = s\GroupService::getAll();
                 </div>
                 <div class="form-group">
                     <label>Data</label>
-                    <input required type="text" name="date" class="form-control" value="<?=attr($event->getDate()) ?: ""?>" />
+                    <input required type="text" name="date" class="form-control" data-toggle="datetimepicker" data-format="Y-m-d H:i:s" value="<?=attr($event->getDate()) ?: ""?>" />
                 </div>
                 <div class="form-group">
                     <label>Data fi</label>
