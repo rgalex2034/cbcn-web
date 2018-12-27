@@ -28,7 +28,6 @@ document.addEventListener("DOMContentLoaded", function(){
         delete options.toggle;
         options = $.extend({}, defaults, options);
 
-        console.log(options);
         $this.datetimepicker(options);
     });
 
