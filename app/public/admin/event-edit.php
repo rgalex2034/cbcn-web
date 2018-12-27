@@ -82,7 +82,7 @@ $all_groups = s\GroupService::getAll();
                 </div>
                 <div class="form-group">
                     <label>Preu</label>
-                    <input type="number" step="0.01" name="price" class="form-control" value="<?=attr($event->getPrice()) ?: ""?>"/>
+                    <input type="number" step="0.01" min="0" name="price" class="form-control" value="<?=attr($event->getPrice()) ?: ""?>"/>
                 </div>
                 <div class="form-group">
                     <label>URL</label>
@@ -91,7 +91,7 @@ $all_groups = s\GroupService::getAll();
                 </div>
                 <div class="form-group">
                     <label>Edat recomanada</label>
-                    <input type="number" name="rec_age" class="form-control" value="<?=attr($event->getRecommendedAge()) ?: ""?>"/>
+                    <input type="number" min="0" name="rec_age" class="form-control" value="<?=attr($event->getRecommendedAge()) ?: ""?>"/>
                 </div>
                 <div class="form-group">
                     <label data-required>Imatge</label>
@@ -128,7 +128,7 @@ $all_groups = s\GroupService::getAll();
                 <div class="form-group">
                     <label>Telèfon de contacte</label>
                     <input type="text" title="En format numèric, amb prefix internacional opcional"
-                        pattern="\+?[\d ]+" name="contact_phone" class="form-control" value="<?=attr($event->getContactPhone()) ?: ""?>"/>
+                        pattern="\+?[\d ]+" placeholder="(+)123 456 789" name="contact_phone" class="form-control" value="<?=attr($event->getContactPhone()) ?: ""?>"/>
                 </div>
                 <div class="action-bar">
                     <button type="submit" class="btn btn-success">Guardar</button>

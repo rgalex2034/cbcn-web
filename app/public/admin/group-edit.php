@@ -63,8 +63,8 @@ $place = $group->getPlace() ?: new c\Place(null);
                         pattern="^https?://.+" placeholder="http://..." class="form-control" value="<?=attr($group->getUrlInfo()) ?: ""?>"/>
                 </div>
                 <div class="form-group">
-                    <label>URL de l'imatge</label>
-                    <input type="text" name="url_image" class="form-control" value="<?=attr($group->getUrlImage()) ?: ""?>"/>
+                    <label data-required>URL de l'imatge</label>
+                    <input required type="text" name="url_image" class="form-control" value="<?=attr($group->getUrlImage()) ?: ""?>"/>
                 </div>
                 <div class="form-group">
                     <label>Responsable</label>
@@ -76,7 +76,8 @@ $place = $group->getPlace() ?: new c\Place(null);
                 </div>
                 <div class="form-group">
                     <label>Telèfon de contacte</label>
-                    <input type="text" name="contact_phone" class="form-control" value="<?=attr($group->getContactPhone()) ?: ""?>"/>
+                    <input type="text" name="contact_phone" title="En format numèric, amb prefix internacional opcional"
+                        pattern="\+?[\d ]+" placeholder="(+)123 456 789" class="form-control" value="<?=attr($group->getContactPhone()) ?: ""?>"/>
                 </div>
                 <div class="form-group">
                     <label>Districte</label>
