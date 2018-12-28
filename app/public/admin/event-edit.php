@@ -73,17 +73,17 @@ $all_groups = s\GroupService::getAll();
                 </div>
                 <div class="form-row">
                     <div class="col">
-                        <label>Latitud</label>
-                        <input type="number" name="place[latitude]" class="form-control" value="<?=attr($place->getLatitude())?>"/>
+                        <label data-required>Latitud</label>
+                        <input required type="number" name="place[latitude]" class="form-control" value="<?=attr($place->getLatitude())?>"/>
                     </div>
                     <div class="col">
-                        <label>Longitud</label>
-                        <input type="number" name="place[longitude]" class="form-control" value="<?=attr($place->getLongitude())?>"/>
+                        <label data-required>Longitud</label>
+                        <input required type="number" name="place[longitude]" class="form-control" value="<?=attr($place->getLongitude())?>"/>
                     </div>
                 </div>
                 <div class="form-group">
-                    <label>Preu</label>
-                    <input type="number" step="0.01" min="0" name="price" class="form-control" value="<?=attr($event->getPrice()) ?: ""?>"/>
+                    <label data-required>Preu</label>
+                    <input required type="number" step="0.01" min="0" name="price" class="form-control" value="<?=attr($event->getPrice()) ?: "0"?>"/>
                 </div>
                 <div class="form-group">
                     <label>URL</label>
@@ -91,8 +91,8 @@ $all_groups = s\GroupService::getAll();
                         pattern="^https?://.+" placeholder="http://..." class="form-control" value="<?=attr($event->getUrl()) ?: ""?>"/>
                 </div>
                 <div class="form-group">
-                    <label>Edat recomanada</label>
-                    <input type="number" min="0" name="rec_age" class="form-control" value="<?=attr($event->getRecommendedAge()) ?: ""?>"/>
+                    <label data-required>Edat recomanada</label>
+                    <input required type="number" min="0" name="rec_age" class="form-control" value="<?=attr($event->getRecommendedAge()) ?: ""?>"/>
                 </div>
                 <div class="form-group">
                     <label data-required>Imatge</label>
@@ -104,8 +104,8 @@ $all_groups = s\GroupService::getAll();
                     <img id="preview-event" class="full-width" src="<?=attr(($image = $event->getImageFull()) ? u\ImageFile::getImageUrl($image) : "") ?: ""?>"/>
                 </div>
                 <div class="form-group">
-                    <label>Grup</label>
-                    <select name="group_id" class="form-control">
+                    <label data-required>Grup</label>
+                    <select required name="group_id" class="form-control">
                         <option value="" <?=is_null($group->getId()) ? "selected" : "" ?>>Selecciona una opció...</option>
                         <?php foreach($all_groups as $option_gr):?>
                             <option value="<?=($gr_id = $option_gr->getId())?>"
@@ -116,20 +116,25 @@ $all_groups = s\GroupService::getAll();
                         <?php endforeach;?>
                     </select>
                 </div>
-                <div class="form-group">
-                    <label>Organitzador</label>
-                    <input type="text" name="organizer" class="form-control" value="<?=attr($event->getOrganizer()) ?: ""?>"/>
-                </div>
-                <div class="form-group">
-                    <label>Correu de contacte</label>
-                    <input type="text" name="contact_email"
-                        title="El correu electrònic ha de contenir només un @ que separi el nom del correu i el su proveïdor"
-                        pattern="[^@]+@[^@]+" placeholder="exemple@email.com" class="form-control" value="<?=attr($event->getContactEmail()) ?: ""?>"/>
-                </div>
-                <div class="form-group">
-                    <label>Telèfon de contacte</label>
-                    <input type="text" title="En format numèric, amb prefix internacional opcional"
-                        pattern="\+?[\d ]+" placeholder="(+)123 456 789" name="contact_phone" class="form-control" value="<?=attr($event->getContactPhone()) ?: ""?>"/>
+                <div class="border p-2">
+                    <p class="text-muted">
+                        La següent informació es opcional, y s'utilitzará l'informació de contacte del grup en cas de que no hi poseu dades.
+                    </p>
+                    <div class="form-group">
+                        <label>Organitzador</label>
+                        <input type="text" name="organizer" class="form-control" value="<?=attr($event->getOrganizer()) ?: ""?>"/>
+                    </div>
+                    <div class="form-group">
+                        <label>Correu de contacte</label>
+                        <input type="text" name="contact_email"
+                            title="El correu electrònic ha de contenir només un @ que separi el nom del correu i el su proveïdor"
+                            pattern="[^@]+@[^@]+" placeholder="exemple@email.com" class="form-control" value="<?=attr($event->getContactEmail()) ?: ""?>"/>
+                    </div>
+                    <div class="form-group">
+                        <label>Telèfon de contacte</label>
+                        <input type="text" title="En format numèric, amb prefix internacional opcional"
+                            pattern="\+?[\d ]+" placeholder="(+)123 456 789" name="contact_phone" class="form-control" value="<?=attr($event->getContactPhone()) ?: ""?>"/>
+                    </div>
                 </div>
                 <div class="action-bar">
                     <button type="submit" class="btn btn-success">Guardar</button>
