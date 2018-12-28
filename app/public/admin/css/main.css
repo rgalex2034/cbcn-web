@@ -33,3 +33,9 @@ body > .content{
 .full-width{
     width: 100%;
 }
+
+/*Form fields*/
+label[data-required]:after{
+    content: " *";
+    color: red;
+}

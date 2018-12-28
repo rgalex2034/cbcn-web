@@ -3,7 +3,7 @@ require_once __DIR__."/../core.php";
 
 use PauSabe\CBCN\utils as u;
 
-function upload_image_input($tmp_name){
+function upload_image_input($tmp_name, $max_width = 1080, $make_thumb = true){
     $image_dir = CBCN_PUBLIC_ROOT."/static/imgs";
     $file_name = date("Ymdhi")."_".uniqid();
     $full_name = $file_name."_full";
@@ -25,12 +25,14 @@ function upload_image_input($tmp_name){
     }
 
     $image_file = new u\ImageFile($original_file);
-    if(!$image_file->generateFullImage($image_dir."/".$full_name)) return false;
-    if(!$image_file->generateThumbnail($image_dir."/".$low_name)) return false;
+    if(!$image_file->generateFullImage($image_dir."/".$full_name, $max_width)) return false;
+    if($make_thumb){
+        if(!$image_file->generateThumbnail($image_dir."/".$low_name)) return false;
+    }
 
     return array(
         "image_original" => $file_name,
         "image_full" => $full_name,
-        "image_low" => $low_name,
+        "image_low" => $make_thumb ? $low_name : false,
     );
 }
