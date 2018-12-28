@@ -9,9 +9,9 @@ class ImageFile{
         $this->file = $file;
     }
 
-    public function generateFullImage($destination){
+    public function generateFullImage($destination, $max_width = 1080){
         $imagick = new \Imagick($this->file);
-        if($imagick->getImageWidth() > 1080 && !$imagick->resizeImage(1080, 0, \Imagick::FILTER_QUADRATIC, .6)){
+        if($imagick->getImageWidth() > $max_width && !$imagick->resizeImage($max_width, 0, \Imagick::FILTER_QUADRATIC, .6)){
             return false;
         }
         return file_put_contents($destination, $imagick->getImageBlob());

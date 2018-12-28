@@ -1,6 +1,7 @@
 <?php
 require_once "core.php";
 require_once "helpers/ajax.php";
+require_once "helpers/file.php";
 
 use PauSabe\CBCN\service as s;
 use PauSabe\CBCN\utils as u;
@@ -22,6 +23,15 @@ function save(){
         $place_data["id"] = s\PlaceService::create($place_data["address"], $place_data);
 
     $safe_post["place_id"] = $place_data["id"];
+
+    if(isset($_FILES["image"]) && $_FILES["image"]["tmp_name"]){
+        $res = upload_image_input($_FILES["image"]["tmp_name"], 350, false);
+        if($res){
+            $safe_post["url_image"] = $res["image_full"];
+        } else if(!is_numeric($safe_post["id"])){
+            return response("No se pueden subir las imágenes. Prueba con un menor tamaño.", 500);
+        }
+    }
 
     isset($safe_post["id"]) && is_numeric($id = $safe_post["id"]) ?
         s\GroupService::update($id, $safe_post["name"], $safe_post->getOriginal()) :

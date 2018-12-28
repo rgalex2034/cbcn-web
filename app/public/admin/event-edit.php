@@ -24,6 +24,7 @@ $all_groups = s\GroupService::getAll();
         <script src="js/plugins/jquery.datetimepicker.full.min.js"></script>
         <script src="js/plugins/form-ajax.js"></script>
         <script src="js/plugins/modal.js"></script>
+        <script src="js/plugins/imagepreview.js"></script>
         <script src="js/utils.js"></script>
         <script src="js/event-edit.js"></script>
     </head>
@@ -39,12 +40,12 @@ $all_groups = s\GroupService::getAll();
                     <input required type="text" name="name" class="form-control" value="<?=attr($event->getName()) ?: ""?>"/>
                 </div>
                 <div class="form-group">
-                    <label>Subtítol</label>
-                    <input type="text" name="subtitle" class="form-control" value="<?=attr($event->getSubtitle()) ?: ""?>"/>
+                    <label data-required>Subtítol</label>
+                    <input required type="text" name="subtitle" class="form-control" value="<?=attr($event->getSubtitle()) ?: ""?>"/>
                 </div>
                 <div class="form-group">
-                    <label>Descripció</label>
-                    <textarea name="description" class="form-control"><?=html($event->getDescription()) ?: ""?></textarea>
+                    <label data-required>Descripció</label>
+                    <textarea required name="description" class="form-control"><?=html($event->getDescription()) ?: ""?></textarea>
                 </div>
                 <div class="form-group">
                     <label>Destacat</label>
@@ -62,12 +63,12 @@ $all_groups = s\GroupService::getAll();
                     <input type="hidden" name="place_id" value="<?=attr($place->getId())?>" />
                     <input type="hidden" name="place[id]" value="<?=attr($place->getId())?>" />
                     <div class="col">
-                        <label>Adreça curta</label>
-                        <input type="text" name="place[short_address]" class="form-control" value="<?=attr($place->getShortAddress())?>"/>
+                        <label data-required>Adreça curta</label>
+                        <input required type="text" name="place[short_address]" class="form-control" value="<?=attr($place->getShortAddress())?>"/>
                     </div>
                     <div class="col">
-                        <label>Adreça completa</label>
-                        <input type="text" name="place[address]" class="form-control" value="<?=attr($place->getAddress())?>"/>
+                        <label data-required>Adreça completa</label>
+                        <input required type="text" name="place[address]" class="form-control" value="<?=attr($place->getAddress())?>"/>
                     </div>
                 </div>
                 <div class="form-row">
@@ -95,12 +96,12 @@ $all_groups = s\GroupService::getAll();
                 </div>
                 <div class="form-group">
                     <label data-required>Imatge</label>
-                    <input <?=$id ? "" : "required"?> type="file" accept="image/*" name="image" />
+                    <input <?=$id ? "" : "required"?> type="file" accept="image/*" name="image" data-toggle="imagepreview" data-target="#preview-event" />
                     <input type="hidden" name="image_full" value="<?=$event->getImageFull()?>" />
                     <input type="hidden" name="image_low" value="<?=$event->getImageLow()?>" />
                 </div>
                 <div class="form-group">
-                    <img class="full-width" src="<?=attr(($image = $event->getImageFull()) ? u\ImageFile::getImageUrl($image) : "") ?: ""?>"/>
+                    <img id="preview-event" class="full-width" src="<?=attr(($image = $event->getImageFull()) ? u\ImageFile::getImageUrl($image) : "") ?: ""?>"/>
                 </div>
                 <div class="form-group">
                     <label>Grup</label>
