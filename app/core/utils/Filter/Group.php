@@ -11,12 +11,13 @@ class Group implements u\Filter{
         if(!($data instanceof c\Group)) return $data;
         $place = $data->getPlace();
         $data = $data->jsonSerialize();
+        $protocol = isset($_SERVER["HTTPS"]) ? "https://" : "http://";
         return array(
             "id" => $data["id"],
             "name" => $data["name"],
             "description" => $data["description"],
             "url_info" => $data["url_info"],
-            "url_image" => $data["url_image"],
+            "url_image" => $protocol.$_SERVER["SERVER_NAME"].":".$_SERVER["SERVER_PORT"].u\ImageFile::getImageUrl($data["url_image"]),
             "location" => !$place ? null : array(
                 "latitude" => $place->getLatitude(),
                 "longitude" => $place->getLongitude(),
